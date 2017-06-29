@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace SolariumSpecification;
 
-use RuntimeException;
-use Solarium\Core\Query\Helper;
 use Solarium\QueryType\Select\Query\Query;
+use SolariumSpecification\Term\TermInterface;
 
 /**
  * Equality check filter
@@ -14,67 +13,29 @@ use Solarium\QueryType\Select\Query\Query;
 class Equals implements FilterInterface
 {
     /**
-     * Literal placeholder type
-     *
-     * @var string
-     */
-    const LITERAL = 'literal';
-    
-    /**
-     * Term placeholder type
-     *
-     * @var string
-     */
-    const TERM = 'term';
-    
-    /**
-     * Phrase placeholder type
-     *
-     * @var string
-     */
-    const PHRASE = 'phrase';
-    
-    /**
-     * Solarium query helper
-     *
-     * @var Helper
-     */
-    private $helper;
-
-    /**
      * Field to filter against
      *
-     * @var string
+     * @var string|null
      */
     private $field;
     
     /**
-     * Value to filter
+     * Term to search for
      *
-     * @var string
+     * @var string|TermInterface
      */
-    private $value;
-    
-    /**
-     * Type of filter
-     *
-     * @var string
-     */
-    private $type;
+    private $term;
     
     /**
      * Constructor
      *
-     * @param string $field
-     * @param string $value
-     * @param string $type
+     * @param string|null $field
+     * @param string|TermInterface $term
      */
-    public function __construct(string $field, string $value, string $type = self::LITERAL)
+    public function __construct(string $field = null, $term)
     {
-        $this->helper = new Helper();
         $this->field = $field;
-        $this->value = $value;
-        $this->type = $type;
+        $this->term = $term;
     }
     
     /**
@@ -82,31 +43,14 @@ class Equals implements FilterInterface
      */
     public function getFilter(Query $query): string
     {
-        $parts = [$this->field, $this->value];
-        
-        switch ($this->type) {
-            case self::LITERAL:
-                $placeholder = '%L2%';
-                break;
-
-            case self::TERM:
-                $placeholder = '%T2%';
-                break;
-
-            case self::PHRASE:
-                $placeholder = '%P2%';
-                break;
-
-            default:
-                throw new RuntimeException(sprintf('Invalid type "%s"', $this->type));
+        if (null !== $this->field) {
+            return sprintf(
+                '%s:%s',
+                $this->field,
+                $this->term
+            );
         }
         
-        return $this->helper->assemble(
-            sprintf(
-                '%%L1%%:%s',
-                $placeholder
-            ),
-            $parts
-        );
+        return (string) $this->term;
     }
 }

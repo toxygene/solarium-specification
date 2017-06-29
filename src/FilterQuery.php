@@ -19,11 +19,11 @@ class FilterQuery implements QueryModifierInterface
     private $name;
     
     /**
-     * Query for the filter query
+     * Filter to build the query for the filter query
      *
      * @var FilterInterface
      */
-    private $query;
+    private $filter;
     
     /**
      * Tags for the filter query
@@ -36,13 +36,13 @@ class FilterQuery implements QueryModifierInterface
      * Constructor
      *
      * @param string $name
-     * @param FilterInterface $query
+     * @param FilterInterface $filter
      * @param string[] $tags
      */
-    public function __construct(string $name, FilterInterface $query, array $tags = [])
+    public function __construct(string $name, FilterInterface $filter, array $tags = [])
     {
         $this->name = $name;
-        $this->query = $query;
+        $this->filter = $filter;
         $this->tags = $tags;
     }
     
@@ -52,7 +52,7 @@ class FilterQuery implements QueryModifierInterface
     public function modify(Query $query): QueryModifierInterface
     {
         $filterQuery = $query->createFilterQuery($this->name)
-            ->setQuery($this->query->getFilter($query));
+            ->setQuery($this->filter->getFilter($query));
             
         if (!empty($this->tags)) {
             $filterQuery->setTags($this->tags);

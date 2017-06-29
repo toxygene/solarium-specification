@@ -19,39 +19,12 @@ class EqualsTest extends TestCase
      */
     public function testEqualityStringIsBuilt()
     {
+        /** @var \PHPUnit_Framework_MockObject_MockObject|Query $mockQuery */
         $mockQuery = $this->getMockBuilder(Query::class)
             ->getMock();
 
         $spec = new Equals('abc', 'def');
         
         $this->assertEquals('abc:def', $spec->getFilter($mockQuery));
-    }
-    
-    /**
-     * @covers ::__cosntruct
-     * @covers ::getFilter
-     */
-    public function testTermEqualityStringIsBuild()
-    {
-        $mockQuery = $this->getMockBuilder(Query::class)
-            ->getMock();
-
-        $spec = new Equals('abc', 'def', Equals::TERM);
-        
-        $this->assertEquals('abc:def', $spec->getFilter($mockQuery));
-    }
-    
-    /**
-     * @covers ::__cosntruct
-     * @covers ::getFilter
-     */
-    public function testPhraseEqualityStringIsBuild()
-    {
-        $mockQuery = $this->getMockBuilder(Query::class)
-            ->getMock();
-
-        $spec = new Equals('abc', 'def', Equals::PHRASE);
-        
-        $this->assertEquals('abc:"def"', $spec->getFilter($mockQuery));
     }
 }

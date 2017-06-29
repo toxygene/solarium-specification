@@ -7,6 +7,7 @@ Create Solarium select queries using the [Specification pattern](https://en.wiki
 use SolariumSpecification\AbstractSpecification;
 use SolariumSpecification\Equals;
 use SolariumSpecification\Range;
+use SolariumSpecification\Term\DateTime;
 
 class UpdatedAfterSpecification extends AbstractSpecification
 {
@@ -21,7 +22,7 @@ class UpdatedAfterSpecification extends AbstractSpecification
     {
         return new Range(
             'last_updated_at',
-            $this->updatedAfter->format('Y-m-d\TH:i:s\Z')
+            new DateTime($this->updatedAt)
         );
     }
 }

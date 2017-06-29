@@ -19,11 +19,12 @@ class RangeTest extends TestCase
      */
     public function testRangeWithLiterals()
     {
+        /** @var \PHPUnit_Framework_MockObject_MockObject|Query $mockQuery */
         $mockQuery = $this->createMock(Query::class);
     
         $spec = new Range(
             'a',
-            '*',
+            null,
             '100'
         );
         
@@ -34,37 +35,19 @@ class RangeTest extends TestCase
      * @covers ::__construct
      * @covers ::getFilter
      */
-    public function testRangeWithTerms()
+    public function testRangeStartAndEndExcluded()
     {
+        /** @var \PHPUnit_Framework_MockObject_MockObject|Query $mockQuery */
         $mockQuery = $this->createMock(Query::class);
     
         $spec = new Range(
             'a',
-            't*a',
-            'a*t',
-            Range::TERM,
-            Range::TERM
+            null,
+            null,
+            false,
+            false
         );
         
-        $this->assertEquals('a:[t\*a TO a\*t]', $spec->getFilter($mockQuery));
-    }
-    
-    /**
-     * @covers ::__construct
-     * @covers ::getFilter
-     */
-    public function testRangeWithPhrases()
-    {
-        $mockQuery = $this->createMock(Query::class);
-    
-        $spec = new Range(
-            'a',
-            't*a',
-            'a*t',
-            Range::PHRASE,
-            Range::PHRASE
-        );
-        
-        $this->assertEquals('a:["t*a" TO "a*t"]', $spec->getFilter($mockQuery));
+        $this->assertEquals('a:{* TO *}', $spec->getFilter($mockQuery));
     }
 }
