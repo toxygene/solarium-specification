@@ -6,7 +6,7 @@ Create Solarium select queries using the [Specification pattern](https://en.wiki
 ```php
 use SolariumSpecification\AbstractSpecification;
 use SolariumSpecification\Equals;
-use SolariumSpecification\GreaterThan;
+use SolariumSpecification\Range;
 
 class UpdatedAfterSpecification extends AbstractSpecification
 {
@@ -19,7 +19,7 @@ class UpdatedAfterSpecification extends AbstractSpecification
     
     public function getSpec()
     {
-        return new GreaterThan(
+        return new Range(
             'last_updated_at',
             $this->updatedAfter->format('Y-m-d\TH:i:s\Z')
         );

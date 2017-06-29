@@ -76,6 +76,20 @@ class Range implements FilterInterface
     private $endType;
     
     /**
+     * Should the start of the range be included
+     *
+     * @var bool
+     */
+    private $startInclusive;
+    
+    /**
+     * Should the end of the range be included
+     *
+     * @var bool
+     */
+    private $endInclusive;
+    
+    /**
      * Constructor
      *
      * @param string $field
@@ -83,13 +97,17 @@ class Range implements FilterInterface
      * @param string $end
      * @param string $startType
      * @param string $endType
+     * @param bool $startInclusive
+     * @param bool $endInclusive
      */
     public function __construct(
         string $field,
-        string $start, 
-        string $end, 
+        string $start = '*', 
+        string $end = '*', 
         string $startType = self::LITERAL, 
-        string $endType = self::LITERAL
+        string $endType = self::LITERAL,
+        bool $startInclusive = true,
+        bool $endInclusive = true
     )
     {
         $this->helper = new Helper();
@@ -98,6 +116,8 @@ class Range implements FilterInterface
         $this->end = $end;
         $this->startType = $startType;
         $this->endType = $endType;
+        $this->startInclusive = $startInclusive;
+        $this->endInclusive = $endInclusive;
     }
     
     /**
@@ -141,10 +161,11 @@ class Range implements FilterInterface
         
         return $this->helper->assemble(
             sprintf(
-                '%s:[%s TO %s]',
-                '%L1%',
+                '%%L1%%:%s%s TO %s%s',
+                $this->startInclusive ? '[' : '{',
                 $startPlaceholder,
-                $endPlaceholder
+                $endPlaceholder,
+                $this->endInclusive ? ']' : '}'
             ),
             [
                 $this->field,
