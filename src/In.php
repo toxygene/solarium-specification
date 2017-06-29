@@ -32,6 +32,27 @@ class In implements FilterInterface
      * @var string
      */
     const PHRASE = 'phrase';
+    
+    /**
+     * Field
+     *
+     * @var string
+     */
+    private $field;
+    
+    /**
+     * Helper
+     *
+     * @var Helper
+     */
+    private $helper;
+    
+    /**
+     * Value types
+     *
+     * @var string[]
+     */
+    private $types;
 
     /**
      * Values
@@ -62,7 +83,7 @@ class In implements FilterInterface
         $placeholders = [];
         $parts = [$this->field];
         
-        foreach ($values as $key => $value) {
+        foreach ($this->values as $key => $value) {
             switch ($this->types[$key] ?? self::LITERAL) {
                 case self::LITERAL:
                     $placeholders[] = sprintf('%%L%s%%', $key + 2);

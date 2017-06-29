@@ -9,7 +9,7 @@ use Solarium\QueryType\Select\Query\Query;
 /**
  * Set fields query modifier
  */
-class SetFields implements QueryModifier
+class SetFields implements QueryModifierInterface
 {
     /**
      * Fields to set

@@ -82,17 +82,19 @@ class Equals implements FilterInterface
      */
     public function getFilter(Query $query): string
     {
+        $parts = [$this->field, $this->value];
+        
         switch ($this->type) {
             case self::LITERAL:
-                $placeholder = '%L1%';
+                $placeholder = '%L2%';
                 break;
 
             case self::TERM:
-                $placeholder = '%T1%';
+                $placeholder = '%T2%';
                 break;
 
             case self::PHRASE:
-                $placeholder = '%P1%';
+                $placeholder = '%P2%';
                 break;
 
             default:
@@ -101,11 +103,10 @@ class Equals implements FilterInterface
         
         return $this->helper->assemble(
             sprintf(
-                '%s:%s',
-                $this->field,
+                '%%L1%%:%s',
                 $placeholder
             ),
-            [$this->value]
+            $parts
         );
     }
 }

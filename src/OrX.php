@@ -30,6 +30,8 @@ class OrX implements FilterInterface, QueryModifierInterface
     public function append($child): self
     {
         $this->children[] = $child;
+        
+        return $this;
     }
     
     /**
@@ -42,7 +44,7 @@ class OrX implements FilterInterface, QueryModifierInterface
             implode(
                 ' OR ',
                 array_filter(array_map(
-                    function($child) {
+                    function($child) use ($query) {
                         if ($child instanceof FilterInterface) {
                             return $child->getFilter($query);
                         }

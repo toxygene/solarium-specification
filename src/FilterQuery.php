@@ -9,7 +9,7 @@ use Solarium\QueryType\Select\Query\Query;
 /**
  * Filter query query modifier
  */
-class FilterQuery implements QueryModifier
+class FilterQuery implements QueryModifierInterface
 {
     /**
      * Name for the filter query

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SolariumSpecification;
 
-use Solarium\QuerytType\Select\Query\Query;
+use Solarium\QueryType\Select\Query\Query;
 
 /**
  * Set start query modifier

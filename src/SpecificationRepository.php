@@ -29,7 +29,7 @@ class SpecificationRepository implements SpecificationRepositoryInterface
     public function match(SpecificationInterface $specification): Result
     {
         return $this->client
-            ->select($select);
+            ->select($this->createQuery($specification));
     }
     
     /**

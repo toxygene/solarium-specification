@@ -34,6 +34,13 @@ class Range implements FilterInterface
     const PHRASE = 'phrase';
     
     /**
+     * Helper
+     *
+     * @var string
+     */
+    private $helper;
+    
+    /**
      * Field to filter against
      *
      * @var string
@@ -55,6 +62,20 @@ class Range implements FilterInterface
     private $end;
     
     /**
+     * Type of placeholder for the start
+     *
+     * @var string
+     */
+    private $startType;
+    
+    /**
+     * Type of placeholder for the end
+     *
+     * @var string
+     */
+    private $endType;
+    
+    /**
      * Constructor
      *
      * @param string $field
@@ -73,7 +94,10 @@ class Range implements FilterInterface
     {
         $this->helper = new Helper();
         $this->field = $field;
-        $this->range = $range;
+        $this->start = $start;
+        $this->end = $end;
+        $this->startType = $startType;
+        $this->endType = $endType;
     }
     
     /**
@@ -115,7 +139,7 @@ class Range implements FilterInterface
                 throw new RuntimeException(sprintf('Invalid end type "%s"', $this->endType));
         }
         
-        return $helper->assemble(
+        return $this->helper->assemble(
             sprintf(
                 '%s:[%s TO %s]',
                 '%L1%',
