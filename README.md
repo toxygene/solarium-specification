@@ -4,12 +4,21 @@ Create Solarium select queries using the [Specification pattern](https://en.wiki
 
 # Usage
 ```php
+use Solarium\QueryType\Select\Query\Query;
+use Solarium\QueryType\Select\Result\Result;
 use SolariumSpecification\AbstractSpecification;
 use SolariumSpecification\Equals;
+use SolariumSpecification\FilterQuery;
 use SolariumSpecification\Range;
+use SolariumSpecification\Rows;
+use SolariumSpecification\Sort;
 use SolariumSpecification\Term\DateTime;
 
-class UpdatedAfterSpecification extends AbstractSpecification
+class ProductResult extends Result
+{
+}
+
+class UpdatedAfter extends AbstractSpecification
 {
     private $updatedAfter;
     
@@ -20,14 +29,17 @@ class UpdatedAfterSpecification extends AbstractSpecification
     
     public function getSpec()
     {
-        return new Range(
-            'last_updated_at',
-            new DateTime($this->updatedAt)
+        return new FilterQuery(
+            'updated_after',
+            new Range(
+                'last_updated_at',
+                new DateTime($this->>updatedAt)
+            )
         );
     }
 }
 
-class FilterByCategorySpecification extends AbstractSpecification
+class FilterByCategory extends AbstractSpecification
 {
     private $category;
     
@@ -50,12 +62,13 @@ class RecentlyUpdatedElectronics extends AbstractSpecification
     public function getSpec()
     {
         return new AndX([
-            new UpdatedAfterSpec(new DateTime('-1 week')),
-            new FilterByCategorySpecification('Electronics')
+            new UpdatedAfter(new DateTime('-1 week')),
+            new FilterByCategory('Electronics'),
+            new SetResultClass(ProductResult::class)
         ]);
     }
 }
 
-$repository = new SpecificationRepository(getProductClient());
-var_dump($repository->match(new RecentlyUpdatedElectronics())); // Solarium\QueryType\Select\Result\Result
+$repository = new SpecificationRepository($solariumClient);
+var_dump($repository->match(new RecentlyUpdatedElectronics())); // ProductResult
 ```
