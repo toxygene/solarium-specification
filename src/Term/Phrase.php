@@ -2,9 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SolariumsSpecification\Term;
-
-use SolariumSpecification\Term\TermInterface;
+namespace SolariumSpecification\Term;
 
 class Phrase implements TermInterface
 {
