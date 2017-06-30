@@ -9,7 +9,7 @@ use Solarium\QueryType\Select\Query\Query;
 use SolariumSpecification\SetStart;
 
 /**
- * @defaultCoversClass SolariumSpecification\SetStart
+ * @coversDefaultClass SolariumSpecification\SetStart
  */
 class SetStartTest extends TestCase
 {
@@ -19,6 +19,7 @@ class SetStartTest extends TestCase
      */
     public function testSetStart()
     {
+        /** @var \PHPUnit_Framework_MockObject_MockObject|Query $mockQuery */
         $mockQuery = $this->getMockBuilder(Query::class)
             ->setMethods(['setStart'])
             ->getMock();

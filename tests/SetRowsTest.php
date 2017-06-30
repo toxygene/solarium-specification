@@ -9,7 +9,7 @@ use Solarium\QueryType\Select\Query\Query;
 use SolariumSpecification\SetRows;
 
 /**
- * @defaultCoversClass SolariumSpecification\SetRows
+ * @coversDefaultClass SolariumSpecification\SetRows
  */
 class SetRowsTest extends TestCase
 {
@@ -19,6 +19,7 @@ class SetRowsTest extends TestCase
      */
     public function testSetRows()
     {
+        /** @var \PHPUnit_Framework_MockObject_MockObject|Query $mockQuery */
         $mockQuery = $this->getMockBuilder(Query::class)
             ->setMethods(['setRows'])
             ->getMock();
