@@ -63,7 +63,7 @@ class RecentlyUpdatedElectronics extends AbstractSpecification
     {
         return new AndX([
             new UpdatedAfter(new DateTime('-1 week')),
-            new FilterByCategory('Electronics'),
+            new FilterByCategory(new Phrase('Consumer Electronics')),
             new SetResultClass(ProductResult::class)
         ]);
     }
