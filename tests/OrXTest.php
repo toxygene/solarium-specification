@@ -11,7 +11,7 @@ use SolariumSpecification\FilterInterface;
 use SolariumSpecification\QueryModifierInterface;
 
 /**
- * @coversDefaultClass SolariumSpecification\OrX
+ * @coversDefaultClass \SolariumSpecification\OrX
  */
 class OrXTest extends TestCase
 {

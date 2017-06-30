@@ -12,7 +12,7 @@ use SolariumSpecification\SpecificationInterface;
 use SolariumSpecification\SpecificationRepository;
 
 /**
- * @coversDefaultClass SolariumSpecification\SpecificationRepository
+ * @coversDefaultClass \SolariumSpecification\SpecificationRepository
  */
 class SpecificationRepositoryTest extends TestCase
 {

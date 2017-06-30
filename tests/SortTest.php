@@ -9,7 +9,7 @@ use Solarium\QueryType\Select\Query\Query;
 use SolariumSpecification\Sort;
 
 /**
- * @coversDefaultClass SolariumSpecification\Sort
+ * @coversDefaultClass \SolariumSpecification\Sort
  */
 class SortTest extends TestCase
 {

@@ -11,7 +11,7 @@ use SolariumSpecification\FilterInterface;
 use SolariumSpecification\QueryModifierInterface;
 
 /**
- * @coversDefaultClass SolariumSpecification\AndX
+ * @coversDefaultClass \SolariumSpecification\AndX
  */
 class AndXTest extends TestCase
 {

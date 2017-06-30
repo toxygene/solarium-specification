@@ -9,7 +9,7 @@ use Solarium\QueryType\Select\Query\Query;
 use SolariumSpecification\AddParam;
 
 /**
- * @coversDefaultClass
+ * @coversDefaultClass \SolariumSpecification\AddParam
  */
 class AddParamTest extends TestCase
 {

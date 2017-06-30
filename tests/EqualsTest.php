@@ -9,7 +9,7 @@ use Solarium\QueryType\Select\Query\Query;
 use SolariumSpecification\Equals;
 
 /**
- * @coversDefaultClass SolariumSpecification\Equals
+ * @coversDefaultClass \SolariumSpecification\Equals
  */
 class EqualsTest extends TestCase
 {

@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_name=1);
+declare(strict_types=1);
 
 namespace SolariumSpecification\Term\Modifier;
 

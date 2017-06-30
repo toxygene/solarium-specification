@@ -29,7 +29,7 @@ abstract class AbstractSpecification implements SpecificationInterface
     /**
      * {@inheritdoc}
      */
-    public function modify(Query $query): self
+    public function modify(Query $query): QueryModifierInterface
     {
         return $this->getSpec()->modify($query);
     }

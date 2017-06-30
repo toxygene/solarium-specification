@@ -9,7 +9,7 @@ use Solarium\QueryType\Select\Query\Query;
 use SolariumSpecification\SetResultClass;
 
 /**
- * @coversDefaultClass SolariumSpecification\SetResultClass
+ * @coversDefaultClass \SolariumSpecification\SetResultClass
  */
 class SetResultClassTest extends TestCase
 {
@@ -19,6 +19,7 @@ class SetResultClassTest extends TestCase
      */
     public function testSetResultClass()
     {
+        /** @var \PHPUnit_Framework_MockObject_MockObject|Query $mockQuery */
         $mockQuery = $this->getMockBuilder(Query::class)
             ->setMethods(['setResultClass'])
             ->getMock();

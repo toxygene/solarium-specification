@@ -11,7 +11,7 @@ use SolariumSpecification\FilterInterface;
 use SolariumSpecification\FilterQuery;
 
 /**
- * @coversDefaultClass SolariumSpecification\FilterQuery
+ * @coversDefaultClass \SolariumSpecification\FilterQuery
  */
 class FilterQueryTest extends TestCase
 {
