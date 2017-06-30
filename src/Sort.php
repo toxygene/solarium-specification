@@ -27,6 +27,20 @@ class Sort implements QueryModifierInterface
     const SET = 'set';
 
     /**
+     * Sort ascending
+     *
+     * @var string
+     */
+    const ASC = Query::SORT_ASC;
+
+    /**
+     * Sort descending
+     *
+     * @var string
+     */
+    const DESC = Query::SORT_DESC;
+
+    /**
      * Sort direction
      *
      * @var string
@@ -57,7 +71,7 @@ class Sort implements QueryModifierInterface
     public function __construct(string $sortBy, string $direction = null, string $mode = null)
     {
         if (null === $direction) {
-            $direction = Query::SORT_ASC;
+            $direction = self::ASC;
         }
 
         if (null === $mode) {
