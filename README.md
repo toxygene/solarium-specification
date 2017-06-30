@@ -14,7 +14,7 @@ class UpdatedAfterSpecification extends AbstractSpecification
 {
     private $updatedAfter;
     
-    public function __construct(DateTime $updatedAfter)
+    public function __construct(PhpDateTime $updatedAfter)
     {
         $this->updatedAfter = $updatedAfter;
     }
@@ -23,7 +23,7 @@ class UpdatedAfterSpecification extends AbstractSpecification
     {
         return new Range(
             'last_updated_at',
-            new PhpDateTime($this->updatedAt)
+            new DateTime($this->updatedAt)
         );
     }
 }
