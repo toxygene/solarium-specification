@@ -6,12 +6,12 @@ namespace SolariumSpecification\Test;
 
 use PHPUnit\Framework\TestCase;
 use Solarium\QueryType\Select\Query\Query;
-use SolariumSpecification\AddField;
+use SolariumSpecification\FieldList;
 
 /**
- * @coversDefaultClass SolariumSpecification\AddField
+ * @coversDefaultClass SolariumSpecification\FieldList
  */
-class AddFieldTest extends TestCase
+class FieldListTest extends TestCase
 {
     /**
      * @covers ::__construct
@@ -19,6 +19,7 @@ class AddFieldTest extends TestCase
      */
     public function testFieldIsAddedOnModification()
     {
+        /** @var \PHPUnit_Framework_MockObject_MockObject|Query $mockQuery */
         $mockQuery = $this->getMockBuilder(Query::class)
             ->setMethods(['addField'])
             ->getMock();
@@ -28,7 +29,7 @@ class AddFieldTest extends TestCase
             ->with($this->equalTo('test'))
             ->will($this->returnSelf());
 
-        $spec = new AddField('test');
+        $spec = new FieldList('test');
         
         $this->assertSame($spec, $spec->modify($mockQuery));    
     }

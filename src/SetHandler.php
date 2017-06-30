@@ -6,35 +6,30 @@ namespace SolariumSpecification;
 
 use Solarium\QueryType\Select\Query\Query;
 
-/**
- * Add field query modifier
- */
-class AddField implements QueryModifierInterface
+class SetHandler implements QueryModifierInterface
 {
     /**
-     * Field to add
-     *
      * @var string
      */
-    private $field;
+    private $handler;
 
     /**
      * Constructor
      *
-     * @param string $field
+     * @param string $handler
      */
-    public function __construct(string $field)
+    public function __construct(string $handler)
     {
-        $this->field = $field;
+        $this->handler = $handler;
     }
-    
+
     /**
      * {@inheritdoc}
      */
     public function modify(Query $query): QueryModifierInterface
     {
-        $query->addField($this->field);
-        
+        $query->setHandler($this->handler);
+
         return $this;
     }
 }

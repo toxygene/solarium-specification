@@ -13,7 +13,7 @@ use SolariumSpecification\Term\TermInterface;
 class Equals implements FilterInterface
 {
     /**
-     * Field to filter against
+     * Field to filter
      *
      * @var string|null
      */

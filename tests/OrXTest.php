@@ -22,9 +22,11 @@ class OrXTest extends TestCase
      */
     public function testFilterIsBuiltFromChildren()
     {
+        /** @var \PHPUnit_Framework_MockObject_MockObject|Query $mockQuery */
         $mockQuery = $this->getMockBuilder(Query::class)
             ->getMock();
-        
+
+        /** @var \PHPUnit_Framework_MockObject_MockObject|FilterInterface $mockFilter1 */
         $mockFilter1 = $this->getMockBuilder(FilterInterface::class)
             ->setMethods(['getFilter'])
             ->getMock();
@@ -33,7 +35,8 @@ class OrXTest extends TestCase
             ->method('getFilter')
             ->with($this->identicalTo($mockQuery))
             ->will($this->returnValue('a:b'));
-        
+
+        /** @var \PHPUnit_Framework_MockObject_MockObject|FilterInterface $mockFilter2 */
         $mockFilter2 = $this->getMockBuilder(FilterInterface::class)
             ->setMethods(['getFilter'])
             ->getMock();
@@ -55,9 +58,11 @@ class OrXTest extends TestCase
      */
     public function testModifyIsCalledOnChildren()
     {
+        /** @var \PHPUnit_Framework_MockObject_MockObject|Query $mockQuery */
         $mockQuery = $this->getMockBuilder(Query::class)
             ->getMock();
-        
+
+        /** @var \PHPUnit_Framework_MockObject_MockObject|QueryModifierInterface $mockQueryModifier1 */
         $mockQueryModifier1 = $this->getMockBuilder(QueryModifierInterface::class)
             ->setMethods(['modify'])
             ->getMock();
@@ -66,7 +71,8 @@ class OrXTest extends TestCase
             ->method('modify')
             ->with($this->identicalTo($mockQuery))
             ->will($this->returnSelf());
-        
+
+        /** @var \PHPUnit_Framework_MockObject_MockObject|QueryModifierInterface $mockQueryModifier2 */
         $mockQueryModifier2 = $this->getMockBuilder(QueryModifierInterface::class)
             ->setMethods(['modify'])
             ->getMock();

@@ -6,12 +6,9 @@ namespace SolariumSpecification;
 
 use RuntimeException;
 use Solarium\QueryType\Select\Query\Query;
-use Solarium\QueryType\Select\Query\FilterQuery as QueryFilterQuery;
+use Solarium\QueryType\Select\Query\Component\Facet\Query as ComponentFacetQuery;
 
-/**
- * Filter query query modifier
- */
-class FilterQuery implements QueryModifierInterface
+class FacetQuery implements QueryModifierInterface
 {
     /**
      * Add mode
@@ -35,42 +32,43 @@ class FilterQuery implements QueryModifierInterface
     const UPDATE = 'update';
 
     /**
-     * Name for the filter query
-     *
-     * @var string
-     */
-    private $key;
-    
-    /**
-     * Filter to build the query for the filter query
-     *
      * @var FilterInterface
      */
     private $filter;
 
     /**
-     * Mode
+     * @var array
+     */
+    private $excludes;
+
+    /**
+     * Key
      *
      * @var string
      */
-    private $mode;
-    
+    private $key;
+
     /**
-     * Tags for the filter query
+     * Mode
      *
-     * @var string[]|null
+     * @var string|null
      */
-    private $tags;
+    private $mode;
 
     /**
      * Constructor
      *
      * @param string $key
      * @param FilterInterface $filter
-     * @param string[] $tags
+     * @param array|null $exclude
      * @param string|null $mode
      */
-    public function __construct(string $key, FilterInterface $filter, array $tags = null, string $mode = null)
+    public function __construct(
+        string $key,
+        FilterInterface $filter,
+        array $exclude = null,
+        string $mode = null
+    )
     {
         if (null === $mode) {
             $mode = self::ADD;
@@ -78,44 +76,51 @@ class FilterQuery implements QueryModifierInterface
 
         $this->key = $key;
         $this->filter = $filter;
-        $this->tags = $tags;
+        $this->excludes = $exclude;
         $this->mode = $mode;
     }
-    
+
     /**
      * {@inheritdoc}
      */
     public function modify(Query $query): QueryModifierInterface
     {
-        $filterQuery = $this->buildFilterQuery($query)
+        $facetQuery = $this->buildFacetQuery($query)
             ->setQuery($this->filter->getFilter($query));
 
-        if (null !== $this->tags) {
-            $filterQuery->setTags($this->tags);
+        if (null !== $this->excludes) {
+            $facetQuery->setExcludes($this->excludes);
         }
-        
+
         return $this;
     }
 
     /**
-     * Build the filter query
+     * Build the facet query
      *
      * @param Query $query
-     * @return QueryFilterQuery
+     * @return ComponentFacetQuery
      */
-    private function buildFilterQuery(Query $query): QueryFilterQuery
+    private function buildFacetQuery(Query $query)
     {
         switch ($this->mode) {
             case self::ADD:
-                return $query->createFilterQuery($this->key);
+                return $query->getFacetSet()
+                    ->createFacetQuery($this->key);
+                break;
 
             case self::REPLACE:
-                $query->removeFilterQuery($this->key);
+                $query->getFacetSet()
+                    ->removeFacet($this->key);
 
-                return $query->createFilterQuery($this->key);
+                return $query->getFacetSet()
+                    ->createFacetQuery($this->key);
+                break;
 
             case self::UPDATE:
-                return $query->getFilterQuery($this->key);
+                return $query->getFacetSet()
+                    ->getFacet($this->key);
+                break;
 
             default:
                 throw new RuntimeException(sprintf('Unknown mode "%s"', $this->mode));

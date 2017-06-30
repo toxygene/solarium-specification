@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace SolariumSpecification;
 
-use FilterIterator;
 use Solarium\QueryType\Select\Query\Query;
 use SolariumSpecification\Term\Modifier\Group;
 
@@ -33,7 +32,7 @@ class OrX implements FilterInterface, QueryModifierInterface
     /**
      * Append a child
      *
-     * @param FilterIterator|QueryModifierInterface $child
+     * @param FilterInterface|QueryModifierInterface $child
      * @return self
      */
     public function append($child): self

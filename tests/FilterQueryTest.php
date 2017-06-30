@@ -22,6 +22,8 @@ class FilterQueryTest extends TestCase
     public function testFilterQueryIsAdded()
     {
         // Solarium FilterQuery created by the specification filter query class
+
+        /** @var \PHPUnit_Framework_MockObject_MockObject|SolariumFilterQuery $mockSolariumFilterQuery */
         $mockSolariumFilterQuery = $this->getMockBuilder(SolariumFilterQuery::class)
             ->setMethods(['setQuery', 'setTags'])
             ->getMock();
@@ -37,6 +39,8 @@ class FilterQueryTest extends TestCase
             ->will($this->returnSelf());
 
         // Solarium Query the specification is applied to
+
+        /** @var \PHPUnit_Framework_MockObject_MockObject|Query $mockQuery */
         $mockQuery = $this->getMockBuilder(Query::class)
             ->disableOriginalConstructor()
             ->setMethods(['createFilterQuery'])
@@ -48,6 +52,8 @@ class FilterQueryTest extends TestCase
             ->will($this->returnValue($mockSolariumFilterQuery));
 
         // Mock specification filter to run
+
+        /** @var \PHPUnit_Framework_MockObject_MockObject|FilterInterface $mockFilter */
         $mockFilter = $this->getMockBuilder(FilterInterface::class)
             ->setMethods(['getFilter'])
             ->getMock();

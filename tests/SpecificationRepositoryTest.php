@@ -23,41 +23,45 @@ class SpecificationRepositoryTest extends TestCase
      */
     public function testMatch()
     {
-        $mockClient = $this->getMockBuilder(Client::class)
-            ->setMethods(['createSelect', 'select'])
+        /** @var \PHPUnit_Framework_MockObject_MockObject|Query $mockQuery */
+        $mockQuery = $this->getMockBuilder(Query::class)
             ->getMock();
 
-        $mockQuery = $this->getMockBuilder(Query::class)
+        /** @var \PHPUnit_Framework_MockObject_MockObject|Result $mockResult */
+        $mockResult = $this->createMock(Result::class);
+
+        /** @var \PHPUnit_Framework_MockObject_MockObject|Client $mockClient */
+        $mockClient = $this->getMockBuilder(Client::class)
+            ->setMethods(['createSelect', 'select'])
             ->getMock();
 
         $mockClient->expects($this->once())
             ->method('createSelect')
             ->will($this->returnValue($mockQuery));
 
-        $mockResult = $this->createMock(Result::class);
-
         $mockClient->expects($this->once())
             ->method('select')
             ->with($this->identicalTo($mockQuery))
             ->will($this->returnValue($mockResult));
 
-        $specification = $this->getMockBuilder(SpecificationInterface::class)
+        /** @var \PHPUnit_Framework_MockObject_MockObject|SpecificationInterface $mockSpecification */
+        $mockSpecification = $this->getMockBuilder(SpecificationInterface::class)
             ->setMethods(['getFilter', 'modify'])
             ->getMock();
 
-        $specification->expects($this->once())
+        $mockSpecification->expects($this->once())
             ->method('getFilter')
             ->with($this->identicalTo($mockQuery))
             ->will($this->returnValue(''));
 
-        $specification->expects($this->once())
+        $mockSpecification->expects($this->once())
             ->method('modify')
             ->with($this->identicalTo($mockQuery))
             ->will($this->returnSelf());
 
         $repository = new SpecificationRepository($mockClient);
 
-        $result = $repository->match($specification);
+        $result = $repository->match($mockSpecification);
         
         $this->assertSame($result, $mockResult);
     }
