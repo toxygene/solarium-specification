@@ -4,6 +4,7 @@ Create Solarium select queries using the [Specification pattern](https://en.wiki
 
 # Usage
 ```php
+use DateTime as PhpDateTime;
 use SolariumSpecification\AbstractSpecification;
 use SolariumSpecification\Equals;
 use SolariumSpecification\Range;
@@ -22,7 +23,7 @@ class UpdatedAfterSpecification extends AbstractSpecification
     {
         return new Range(
             'last_updated_at',
-            new DateTime($this->updatedAt)
+            new PhpDateTime($this->updatedAt)
         );
     }
 }
