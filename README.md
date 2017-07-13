@@ -7,10 +7,6 @@ Create Solarium select queries using the [Specification pattern](https://en.wiki
 use Solarium\Core\Client\Client;
 use Solarium\QueryType\Select\Result\Result;
 use SolariumSpecification\Helper;
-use SolariumSpecification\Filter\AndX;
-use SolariumSpecification\Filter\Equals;
-use SolariumSpecification\Filter\FilterInterface;
-use SolariumSpecification\Filter\Range;
 use SolariumSpecification\FilterSpecificationInterface;
 use SolariumSpecification\ModifyQuery\CompositeModify;
 use SolariumSpecification\ModifyQuery\ModifyQueryInterface;
@@ -18,6 +14,11 @@ use SolariumSpecification\ModifyQuery\SetHandler;
 use SolariumSpecification\ModifyQuery\SetResultClass;
 use SolariumSpecification\ModifyQuerySpecificationInterface;
 use SolariumSpecification\Repository;
+use SolariumSpecification\Term\Modifier\AndX;
+use SolariumSpecification\Term\Modifier\Equals;
+use SolariumSpecification\Term\Modifier\Field;
+use SolariumSpecification\Term\Range;
+use SolariumSpecification\Term\Phrase;
 
 require 'vendor/autoload.php';
 
@@ -31,11 +32,13 @@ class UpdatedAfter implements FilterSpecificationInterface
         $this->updatedAfter = $updatedAfter;
     }
 
-    public function getFilter(): FilterInterface
+    public function getTerm(): TermInterface
     {
-        return new Range(
+        return new Field(
             'last_updated_at',
-            Helper::escapeDateTime($this->updatedAfter)
+            new Range(
+                Helper::escapeDateTime($this->updatedAfter)
+            )
         );
     }
 }
@@ -50,11 +53,11 @@ class FilterByCategory implements FilterSpecificationInterface
         $this->category = $category;
     }
 
-    public function getFilter(): FilterInterface
+    public function getTerm(): TermInterface
     {
-        return new Equals(
+        return new Field(
             'category',
-            $this->category
+            new Phrase($this->category)
         );
     }
 }
@@ -62,7 +65,7 @@ class FilterByCategory implements FilterSpecificationInterface
 // Combine `UpdatedAfter` for the last week and `FilterByCategory` for 'Consumer Electronics'
 class RecentlyUpdatedElectronics implements FilterSpecificationInterface
 {
-    public function getFilter(): FilterInterface
+    public function getTerm(): TermInterface
     {
         return new AndX([
             new UpdatedAfter(new DateTime('-1 week')),

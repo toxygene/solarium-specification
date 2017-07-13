@@ -2,23 +2,13 @@
 
 declare(strict_types=1);
 
-namespace SolariumSpecification\Filter;
+namespace SolariumSpecification\Term;
 
-use SolariumSpecification\FilterSpecificationInterface;
-use SolariumSpecification\Helper;
+use function SolariumSpecification\range;
+use SolariumSpecification\TermSpecificationInterface;
 
-/**
- * Range filter interface
- */
-class Range implements FilterInterface, FilterSpecificationInterface
+class Range implements TermInterface, TermSpecificationInterface
 {
-    /**
-     * Field to filter against
-     *
-     * @var string
-     */
-    private $field;
-
     /**
      * Start of the range to filter with
      *
@@ -50,14 +40,12 @@ class Range implements FilterInterface, FilterSpecificationInterface
     /**
      * Constructor
      *
-     * @param string|null $field
      * @param string|null $start
      * @param string|null $end
      * @param bool|null $startInclusive
      * @param bool|null $endInclusive
      */
     public function __construct(
-        string $field = null,
         string $start = null,
         string $end = null,
         bool $startInclusive = null,
@@ -80,7 +68,6 @@ class Range implements FilterInterface, FilterSpecificationInterface
             $endInclusive = true;
         }
 
-        $this->field = $field;
         $this->start = $start;
         $this->end = $end;
         $this->startInclusive = $startInclusive;
@@ -90,29 +77,20 @@ class Range implements FilterInterface, FilterSpecificationInterface
     /**
      * {@inheritdoc}
      */
-    public function filter(): string
+    public function __toString(): string
     {
-        $range = Helper::range(
+        return range(
             $this->start,
             $this->end,
             $this->startInclusive,
             $this->endInclusive
         );
-
-        if (null === $this->field) {
-            return $range;
-        }
-
-        return Helper::equals(
-            $this->field,
-            $range
-        );
     }
-
+    
     /**
      * {@inheritdoc}
      */
-    public function getFilter(): FilterInterface
+    public function getTerm(): TermInterface
     {
         return $this;
     }

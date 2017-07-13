@@ -18,6 +18,7 @@
         "psr-4": {
             "SolariumSpecification\\": "src/",
             "SolariumSpecification\\Test\\": "tests/"
-        }
+        },
+        "files": ["src/functions.php"]
     }
 }

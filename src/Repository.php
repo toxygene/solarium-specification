@@ -32,38 +32,34 @@ class Repository implements RepositoryInterface
      * {@inheritdoc}
      */
     public function match(
-        FilterSpecificationInterface $filterSpecification = null,
+        TermSpecificationInterface $termSpecification = null,
         ModifyQuerySpecificationInterface $modifyQuerySpecification = null): Result
     {
         return $this->client
-            ->select($this->createQuery($filterSpecification, $modifyQuerySpecification));
+            ->select($this->createQuery($termSpecification, $modifyQuerySpecification));
     }
     
     /**
      * Create a select query from a specification
      *
-     * @param FilterSpecificationInterface|null $filter
-     * @param ModifyQuerySpecificationInterface|null $modifyQuery
+     * @param TermSpecificationInterface|null $termSpecification
+     * @param ModifyQuerySpecificationInterface|null $modifyQuerySpecification
      * @return Query
      */
     private function createQuery(
-        FilterSpecificationInterface $filter = null,
-        ModifyQuerySpecificationInterface $modifyQuery = null
+        TermSpecificationInterface $termSpecification = null,
+        ModifyQuerySpecificationInterface $modifyQuerySpecification = null
     ): Query
     {
         $query = $this->client
             ->createSelect();
 
-        if (null !== $modifyQuery) {
-            $modifyQuery->getModifyQuery()
-                ->modify($query);
+        if (null !== $termSpecification) {
+            $query->setQuery((string) $termSpecification->getTerm());
         }
 
-        if (null !== $filter) {
-            $query->setQuery(
-                $filter->getFilter()
-                    ->filter()
-            );
+        if (null !== $modifyQuerySpecification) {
+            $modifyQuerySpecification->getModifyQuery()->modify($query);
         }
 
         return $query;

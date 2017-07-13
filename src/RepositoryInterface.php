@@ -14,13 +14,13 @@ interface RepositoryInterface
     /**
      * Match all results
      *
-     * @param FilterSpecificationInterface|null $filterSpecification
+     * @param TermSpecificationInterface|null $termSpecification
      * @param ModifyQuerySpecificationInterface|null $modifyQuerySpecification
      *
      * @return Result
      */
     public function match(
-        FilterSpecificationInterface $filterSpecification = null,
+        TermSpecificationInterface $termSpecification = null,
         ModifyQuerySpecificationInterface $modifyQuerySpecification = null
     );
 }
