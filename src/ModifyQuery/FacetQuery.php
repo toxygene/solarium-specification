@@ -7,8 +7,8 @@ namespace SolariumSpecification\ModifyQuery;
 use RuntimeException;
 use Solarium\QueryType\Select\Query\Query;
 use Solarium\QueryType\Select\Query\Component\Facet\Query as ComponentFacetQuery;
-use SolariumSpecification\FilterSpecificationInterface;
 use SolariumSpecification\ModifyQuerySpecificationInterface;
+use SolariumSpecification\TermSpecificationInterface;
 
 class FacetQuery implements ModifyQueryInterface, ModifyQuerySpecificationInterface
 {
@@ -34,9 +34,9 @@ class FacetQuery implements ModifyQueryInterface, ModifyQuerySpecificationInterf
     const UPDATE = 'update';
 
     /**
-     * @var FilterSpecificationInterface
+     * @var TermSpecificationInterface
      */
-    private $filterSpecification;
+    private $termSpecification;
 
     /**
      * @var array
@@ -61,13 +61,13 @@ class FacetQuery implements ModifyQueryInterface, ModifyQuerySpecificationInterf
      * Constructor
      *
      * @param string $key
-     * @param FilterSpecificationInterface $filterSpecification
+     * @param TermSpecificationInterface $termSpecification
      * @param array|null $exclude
      * @param string|null $mode
      */
     public function __construct(
         string $key,
-        FilterSpecificationInterface $filterSpecification,
+        TermSpecificationInterface $termSpecification,
         array $exclude = null,
         string $mode = null
     )
@@ -77,7 +77,7 @@ class FacetQuery implements ModifyQueryInterface, ModifyQuerySpecificationInterf
         }
 
         $this->key = $key;
-        $this->filterSpecification = $filterSpecification;
+        $this->termSpecification = $termSpecification;
         $this->excludes = $exclude;
         $this->mode = $mode;
     }
@@ -88,7 +88,7 @@ class FacetQuery implements ModifyQueryInterface, ModifyQuerySpecificationInterf
     public function modify(Query $query): ModifyQueryInterface
     {
         $facetQuery = $this->buildFacetQuery($query)
-            ->setQuery($this->filterSpecification->getFilter()->filter());
+            ->setQuery((string) $this->termSpecification->getTerm());
 
         // todo add facet query modification?
 

@@ -7,8 +7,8 @@ namespace SolariumSpecification\ModifyQuery;
 use RuntimeException;
 use Solarium\QueryType\Select\Query\Query;
 use Solarium\QueryType\Select\Query\FilterQuery as QueryFilterQuery;
-use SolariumSpecification\FilterSpecificationInterface;
 use SolariumSpecification\ModifyQuerySpecificationInterface;
+use SolariumSpecification\TermSpecificationInterface;
 
 /**
  * Filter query query modifier
@@ -44,11 +44,11 @@ class FilterQuery implements ModifyQueryInterface, ModifyQuerySpecificationInter
     private $key;
     
     /**
-     * Filter specification to use to build the query for the filter query
+     * Term specification to use for the filter query
      *
-     * @var FilterSpecificationInterface
+     * @var TermSpecificationInterface
      */
-    private $filterSpecirication;
+    private $termSpecification;
 
     /**
      * Mode
@@ -68,13 +68,13 @@ class FilterQuery implements ModifyQueryInterface, ModifyQuerySpecificationInter
      * Constructor
      *
      * @param string $key
-     * @param FilterSpecificationInterface $filterSpecification
+     * @param TermSpecificationInterface $termSpecification
      * @param string[] $tags
      * @param string|null $mode
      */
     public function __construct(
         string $key,
-        FilterSpecificationInterface $filterSpecification,
+        TermSpecificationInterface $termSpecification,
         array $tags = null,
         string $mode = null
     )
@@ -84,7 +84,7 @@ class FilterQuery implements ModifyQueryInterface, ModifyQuerySpecificationInter
         }
 
         $this->key = $key;
-        $this->filterSpecirication = $filterSpecification;
+        $this->termSpecification = $termSpecification;
         $this->tags = $tags;
         $this->mode = $mode;
     }
@@ -95,9 +95,9 @@ class FilterQuery implements ModifyQueryInterface, ModifyQuerySpecificationInter
     public function modify(Query $query): ModifyQueryInterface
     {
         $filterQuery = $this->buildFilterQuery($query)
-            ->setQuery($this->filterSpecirication->getFilter()->filter());
+            ->setQuery((string) $this->termSpecification->getTerm());
 
-        // todo add support for modifying filter queries
+        // todo add support for modifying filter queries?
 
         if (null !== $this->tags) {
             $filterQuery->setTags($this->tags);
