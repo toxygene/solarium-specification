@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace SolariumSpecification\Term;
 
 use function SolariumSpecification\escapePhrase;
+use SolariumSpecification\TermSpecificationInterface;
 
-class Phrase implements TermInterface
+class Phrase implements TermInterface, TermSpecificationInterface
 {
     /**
      * @var string
@@ -29,5 +30,13 @@ class Phrase implements TermInterface
     public function __toString(): string
     {
         return escapePhrase($this->phrase);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getTerm(): TermInterface
+    {
+        return $this;
     }
 }

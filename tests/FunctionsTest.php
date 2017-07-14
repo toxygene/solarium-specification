@@ -31,12 +31,12 @@ use function SolariumSpecification\range;
 use function SolariumSpecification\required;
 
 /**
- * @coversDefaultClass \SolariumSpecification\Helper
+ *
  */
 class FunctionsTest extends TestCase
 {
     /**
-     * @covers ::andX
+     * @covers \SolariumSpecification\andX
      */
     public function testTermsCanBeAndedTogether()
     {
@@ -44,7 +44,7 @@ class FunctionsTest extends TestCase
     }
 
     /**
-     * @covers ::boost
+     * @covers \SolariumSpecification\boost
      */
     public function testTermsCanBeBoosted()
     {
@@ -52,7 +52,7 @@ class FunctionsTest extends TestCase
     }
 
     /**
-     * @covers ::comment
+     * @covers \SolariumSpecification\comment
      */
     public function testCommentsCanBeOutput()
     {
@@ -60,7 +60,7 @@ class FunctionsTest extends TestCase
     }
 
     /**
-     * @covers ::defaultX
+     * @covers \SolariumSpecification\defaultX
      */
     public function testTermsCanBeJoinedWithTheDefaultOperator()
     {
@@ -68,7 +68,7 @@ class FunctionsTest extends TestCase
     }
 
     /**
-     * @covers ::escapePhrase
+     * @covers \SolariumSpecification\escapePhrase
      */
     public function testPhrasesCanBeEscaped()
     {
@@ -76,7 +76,7 @@ class FunctionsTest extends TestCase
     }
 
     /**
-     * @covers ::escapeTerm
+     * @covers \SolariumSpecification\escapeTerm
      */
     public function testTermsCanBeEscaped()
     {
@@ -84,7 +84,7 @@ class FunctionsTest extends TestCase
     }
 
     /**
-     * @covers ::exclude
+     * @covers \SolariumSpecification\excluded
      */
     public function testTermsCanBeExcluded()
     {
@@ -92,7 +92,7 @@ class FunctionsTest extends TestCase
     }
 
     /**
-     * @covers ::field
+     * @covers \SolariumSpecification\field
      */
     public function testTermsCanBeAppliedToAField()
     {
@@ -100,8 +100,8 @@ class FunctionsTest extends TestCase
     }
 
     /**
-     * @covers ::formatDateTime
-     * @covers ::formatDateTimeInterface
+     * @covers \SolariumSpecification\formatDateTime
+     * @covers \SolariumSpecification\formatDateTimeInterface
      */
     public function testDateTimeObjectsCanBeConvertedToSolrDateTimeFormat()
     {
@@ -115,8 +115,8 @@ class FunctionsTest extends TestCase
     }
 
     /**
-     * @covers ::formatDateTimeImmutable
-     * @covers ::formatDateTimeInterface
+     * @covers \SolariumSpecification\formatDateTimeImmutable
+     * @covers \SolariumSpecification\formatDateTimeInterface
      */
     public function testImmutableDateTimeObjectsCanBeConvertedToSolrDateTimeFormat()
     {
@@ -130,7 +130,7 @@ class FunctionsTest extends TestCase
     }
 
     /**
-     * @covers ::fuzzy
+     * @covers \SolariumSpecification\fuzzy
      */
     public function testTermsCanBeFuzzySearched()
     {
@@ -138,7 +138,7 @@ class FunctionsTest extends TestCase
     }
 
     /**
-     * @covers ::group
+     * @covers \SolariumSpecification\group
      */
     public function testTermsCanBeGrouped()
     {
@@ -146,7 +146,7 @@ class FunctionsTest extends TestCase
     }
 
     /**
-     * @covers ::gt
+     * @covers \SolariumSpecification\gt
      */
     public function testGreaterThanRangeCanBeSearched()
     {
@@ -154,7 +154,7 @@ class FunctionsTest extends TestCase
     }
 
     /**
-     * @covers ::gte
+     * @covers \SolariumSpecification\gte
      */
     public function testGreaterThanOrEqualToRangeCanBeSearched()
     {
@@ -162,7 +162,7 @@ class FunctionsTest extends TestCase
     }
 
     /**
-     * @covers ::isNotNull
+     * @covers \SolariumSpecification\isNotNull
      */
     public function testIsNotNull()
     {
@@ -170,7 +170,7 @@ class FunctionsTest extends TestCase
     }
 
     /**
-     * @covers ::lt
+     * @covers \SolariumSpecification\lt
      */
     public function testLessThanRangeCanBeSearched()
     {
@@ -178,7 +178,7 @@ class FunctionsTest extends TestCase
     }
 
     /**
-     * @covers ::lt
+     * @covers \SolariumSpecification\lt
      */
     public function testLessThanOrEqualToRangeCanBeSearched()
     {
@@ -186,7 +186,7 @@ class FunctionsTest extends TestCase
     }
 
     /**
-     * @covers ::not
+     * @covers \SolariumSpecification\not
      */
     public function testTermsCanBeJoinedWithNot()
     {
@@ -194,7 +194,7 @@ class FunctionsTest extends TestCase
     }
 
     /**
-     * @covers ::orX
+     * @covers \SolariumSpecification\orX
      */
     public function testTermsCanBeOredTogether()
     {
@@ -202,7 +202,7 @@ class FunctionsTest extends TestCase
     }
 
     /**
-     * @covers ::range
+     * @covers \SolariumSpecification\range
      */
     public function testTermRangedCanBeDone()
     {
@@ -210,7 +210,7 @@ class FunctionsTest extends TestCase
     }
 
     /**
-     * @covers ::require
+     * @covers \SolariumSpecification\required
      */
     public function testTermsCanBeRequired()
     {

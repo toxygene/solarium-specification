@@ -4,26 +4,27 @@ Create Solarium select queries using the [Specification pattern](https://en.wiki
 
 # Usage
 ```php
+use function SolariumSpecification\escapeDateTime;
 use Solarium\Core\Client\Client;
 use Solarium\QueryType\Select\Result\Result;
-use SolariumSpecification\Helper;
-use SolariumSpecification\FilterSpecificationInterface;
 use SolariumSpecification\ModifyQuery\CompositeModify;
 use SolariumSpecification\ModifyQuery\ModifyQueryInterface;
 use SolariumSpecification\ModifyQuery\SetHandler;
 use SolariumSpecification\ModifyQuery\SetResultClass;
 use SolariumSpecification\ModifyQuerySpecificationInterface;
 use SolariumSpecification\Repository;
+use SolariumSpecification\TermSpecificationInterface;
 use SolariumSpecification\Term\Modifier\AndX;
 use SolariumSpecification\Term\Modifier\Equals;
 use SolariumSpecification\Term\Modifier\Field;
 use SolariumSpecification\Term\Range;
 use SolariumSpecification\Term\Phrase;
+use SolariumSpecification\Term\SingleTerm;
 
 require 'vendor/autoload.php';
 
 // Only match results with a `last_updated_at` after a supplied DateTime
-class UpdatedAfter implements FilterSpecificationInterface
+class UpdatedAfter implements TermSpecificationInterface
 {
     private $updatedAfter;
 
@@ -36,15 +37,13 @@ class UpdatedAfter implements FilterSpecificationInterface
     {
         return new Field(
             'last_updated_at',
-            new Range(
-                Helper::escapeDateTime($this->updatedAfter)
-            )
+            new Range(new SingleTerm(escapeDateTime($this->updatedAfter)))
         );
     }
 }
 
 // Only match results assign to a supplied `category`
-class FilterByCategory implements FilterSpecificationInterface
+class FilterByCategory implements TermSpecificationInterface
 {
     private $category;
 
@@ -63,7 +62,7 @@ class FilterByCategory implements FilterSpecificationInterface
 }
 
 // Combine `UpdatedAfter` for the last week and `FilterByCategory` for 'Consumer Electronics'
-class RecentlyUpdatedElectronics implements FilterSpecificationInterface
+class RecentlyUpdatedElectronics implements TermSpecificationInterface
 {
     public function getTerm(): TermInterface
     {
@@ -113,11 +112,16 @@ $solariumClient = new Client();
 
 $repository = new Repository($solariumClient);
 
-// Match results based on the specifications
 var_dump(
     $repository->match(
         new RecentlyUpdatedElectronics(),
         new Products()
     )
-); // ProductResult
+);
+
+/*
+The query will be 'last_updated_at:[2016-07-06T19:36:23Z] AND category:"Consumer Electronics"'.
+The handler is Products.
+The result class is ProductResult.
+*/
 ```

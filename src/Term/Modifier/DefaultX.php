@@ -8,7 +8,7 @@ use function SolariumSpecification\joinX;
 use SolariumSpecification\Term\TermInterface;
 use SolariumSpecification\TermSpecificationInterface;
 
-class JoinX implements ModifierInterface, TermSpecificationInterface
+class DefaultX implements ModifierInterface, TermSpecificationInterface
 {
     /**
      * Children

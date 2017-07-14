@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace SolariumSpecification\Term\Modifier;
 
 use function SolariumSpecification\andX;
-use SolariumSpecification;
 use SolariumSpecification\Term\TermInterface;
 use SolariumSpecification\TermSpecificationInterface;
 
