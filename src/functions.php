@@ -15,7 +15,7 @@ use DateTimeZone;
  */
 function andX(array $terms): string
 {
-    return group(implode(' AND ', $terms));
+    return implode(' AND ', $terms);
 }
 
 /**
@@ -65,7 +65,7 @@ function comment(string $term, string $comment): string
  */
 function defaultX($parts): string
 {
-    return group(implode(' ', $parts));
+    return implode(' ', $parts);
 }
 
 /**
@@ -293,7 +293,7 @@ function not($x, $y): string
  */
 function orX(array $parts): string
 {
-    return group(implode(' OR ', $parts));
+    return implode(' OR ', $parts);
 }
 
 /**
