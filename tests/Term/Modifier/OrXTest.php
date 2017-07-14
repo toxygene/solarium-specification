@@ -39,7 +39,7 @@ class OrXTest extends TestCase
         $spec = new OrX([$mockTerm1]);
         $spec->append($mockTerm2);
 
-        $this->assertEquals('(a:b OR c:d)', (string) $spec);
+        $this->assertEquals('a:b OR c:d', (string) $spec);
     }
 
     /**

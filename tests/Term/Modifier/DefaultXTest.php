@@ -39,7 +39,7 @@ class DefaultXTest extends TestCase
         $spec = new DefaultX([$mockTerm1]);
         $spec->append($mockTerm2);
 
-        $this->assertEquals('(a:b c:d)', (string) $spec);
+        $this->assertEquals('a:b c:d', (string) $spec);
     }
 
     /**

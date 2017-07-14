@@ -39,7 +39,7 @@ class AndXTest extends TestCase
         $spec = new AndX([$mockTerm1]);
         $spec->append($mockTerm2);
 
-        $this->assertEquals('(a:b AND c:d)', (string) $spec);
+        $this->assertEquals('a:b AND c:d', (string) $spec);
     }
 
     /**
