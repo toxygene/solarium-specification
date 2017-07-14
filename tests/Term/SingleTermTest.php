@@ -22,4 +22,14 @@ class SingleTermTest extends TestCase
 
         $this->assertEquals('test', (string) $term);
     }
+
+    /**
+     * @covers ::getTerm
+     */
+    public function testTermCanRetrieved()
+    {
+        $spec = new SingleTerm('test');
+
+        $this->assertSame($spec, $spec->getTerm());
+    }
 }

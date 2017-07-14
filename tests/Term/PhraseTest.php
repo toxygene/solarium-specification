@@ -22,4 +22,14 @@ class PhraseTest extends TestCase
 
         $this->assertEquals('"test"', (string) $phrase);
     }
+
+    /**
+     * @covers ::getTerm
+     */
+    public function testTermCanRetrieved()
+    {
+        $spec = new Phrase('test');
+
+        $this->assertSame($spec, $spec->getTerm());
+    }
 }

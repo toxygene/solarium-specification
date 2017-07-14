@@ -41,4 +41,14 @@ class OrXTest extends TestCase
 
         $this->assertEquals('(a:b OR c:d)', (string) $spec);
     }
+
+    /**
+     * @covers ::getTerm
+     */
+    public function testTermCanRetrieved()
+    {
+        $spec = new OrX();
+
+        $this->assertSame($spec, $spec->getTerm());
+    }
 }

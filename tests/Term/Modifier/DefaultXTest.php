@@ -41,4 +41,14 @@ class DefaultXTest extends TestCase
 
         $this->assertEquals('(a:b c:d)', (string) $spec);
     }
+
+    /**
+     * @covers ::getTerm
+     */
+    public function testTermCanRetrieved()
+    {
+        $spec = new DefaultX();
+
+        $this->assertSame($spec, $spec->getTerm());
+    }
 }

@@ -19,4 +19,14 @@ class RangeTest extends TestCase
     {
         $this->assertEquals('[* TO *]', (string) (new Range()));
     }
+
+    /**
+     * @covers ::getTerm
+     */
+    public function testTermCanRetrieved()
+    {
+        $spec = new Range();
+
+        $this->assertSame($spec, $spec->getTerm());
+    }
 }

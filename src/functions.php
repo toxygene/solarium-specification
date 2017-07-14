@@ -44,13 +44,15 @@ function boost(string $term, float $amount = null): string
 /**
  * Build a comment search
  *
+ * @param string $term
  * @param string $comment
  * @return string
  */
-function comment(string $comment): string
+function comment(string $term, string $comment): string
 {
     return sprintf(
-        '/* %s */',
+        '%s /* %s */',
+        $term,
         $comment
     );
 }

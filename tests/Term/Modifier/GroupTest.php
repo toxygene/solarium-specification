@@ -30,4 +30,17 @@ class GroupTest extends TestCase
 
         $this->assertEquals('(test)', (string) $spec);
     }
+
+    /**
+     * @covers ::getTerm
+     */
+    public function testTermCanRetrieved()
+    {
+        /** @var \PHPUnit_Framework_MockObject_MockObject|TermInterface $mockTerm */
+        $mockTerm = $this->createMock(TermInterface::class);
+
+        $spec = new Group($mockTerm);
+
+        $this->assertSame($spec, $spec->getTerm());
+    }
 }

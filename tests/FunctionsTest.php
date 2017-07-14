@@ -56,7 +56,7 @@ class FunctionsTest extends TestCase
      */
     public function testCommentsCanBeOutput()
     {
-        $this->assertEquals('/* test */', comment('test'));
+        $this->assertEquals('test /* test */', comment('test', 'test'));
     }
 
     /**

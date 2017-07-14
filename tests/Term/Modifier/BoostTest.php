@@ -30,4 +30,17 @@ class BoostTest extends TestCase
 
         $this->assertEquals('test^0.5', (string) $spec);
     }
+
+    /**
+     * @covers ::getTerm
+     */
+    public function testTermCanRetrieved()
+    {
+        /** @var \PHPUnit_Framework_MockObject_MockObject|TermInterface $mockTerm */
+        $mockTerm = $this->createMock(TermInterface::class);
+
+        $spec = new Boost($mockTerm);
+
+        $this->assertSame($spec, $spec->getTerm());
+    }
 }

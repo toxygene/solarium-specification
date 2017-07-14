@@ -41,4 +41,14 @@ class AndXTest extends TestCase
 
         $this->assertEquals('(a:b AND c:d)', (string) $spec);
     }
+
+    /**
+     * @covers ::getTerm
+     */
+    public function testTermCanRetrieved()
+    {
+        $spec = new AndX();
+
+        $this->assertSame($spec, $spec->getTerm());
+    }
 }

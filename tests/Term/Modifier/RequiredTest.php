@@ -5,19 +5,19 @@ declare(strict_types=1);
 namespace SolariumSpecification\Test\Term\Modifier;
 
 use PHPUnit\Framework\TestCase;
-use SolariumSpecification\Term\Modifier\Field;
+use SolariumSpecification\Term\Modifier\Required;
 use SolariumSpecification\Term\TermInterface;
 
 /**
- * @coversDefaultClass \SolariumSpecification\Term\Modifier\Field
+ * @coversDefaultClass \SolariumSpecification\Term\Modifier\Required
  */
-class FieldTest extends TestCase
+class RequiredTest extends TestCase
 {
     /**
      * @covers ::__construct
      * @covers ::__toString
      */
-    public function testTermsCanBeAppliedToFields()
+    public function testTermsCanBeRequired()
     {
         /** @var \PHPUnit_Framework_MockObject_MockObject|TermInterface $mockTerm */
         $mockTerm = $this->createMock(TermInterface::class);
@@ -26,9 +26,9 @@ class FieldTest extends TestCase
             ->method('__toString')
             ->will($this->returnValue('test'));
 
-        $spec = new Field('field', $mockTerm);
+        $spec = new Required($mockTerm);
 
-        $this->assertEquals('field:test', (string) $spec);
+        $this->assertEquals('+test', (string) $spec);
     }
 
     /**
@@ -39,7 +39,7 @@ class FieldTest extends TestCase
         /** @var \PHPUnit_Framework_MockObject_MockObject|TermInterface $mockTerm */
         $mockTerm = $this->createMock(TermInterface::class);
 
-        $spec = new Field('field', $mockTerm);
+        $spec = new Required($mockTerm);
 
         $this->assertSame($spec, $spec->getTerm());
     }
