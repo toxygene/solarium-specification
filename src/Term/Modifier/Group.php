@@ -30,7 +30,7 @@ class Group implements ModifierInterface, TermSpecificationInterface
      */
     public function __toString(): string
     {
-        return group($this->term);
+        return group((string) $this->term);
     }
 
     /**
