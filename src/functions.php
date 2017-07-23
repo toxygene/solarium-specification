@@ -63,7 +63,7 @@ function comment(string $term, string $comment): string
  * @param string[] $parts
  * @return string
  */
-function defaultX($parts): string
+function defaultX(array $parts): string
 {
     return implode(' ', $parts);
 }
@@ -183,14 +183,14 @@ function fuzzy(string $term, int $distance = null): string
 /**
  * Build a grouped search
  *
- * @param string $terms
+ * @param string $term
  * @return string
  */
-function group($terms): string
+function group(string $term): string
 {
     return sprintf(
         '(%s)',
-        $terms
+        $term
     );
 }
 
@@ -276,7 +276,7 @@ function lte(string $term): string
  * @param string $y
  * @return string
  */
-function not($x, $y): string
+function not(string $x, string $y): string
 {
     return sprintf(
         '%s NOT %s',
@@ -313,10 +313,10 @@ function required(string $term): string
 /**
  * Build a range search
  *
- * @param string|null $start
- * @param string|null $end
- * @param boolean|null $includeStart
- * @param boolean|null $includeEnd
+ * @param string|null $start Defaults to '*'
+ * @param string|null $end Defaults to '*'
+ * @param boolean|null $includeStart Defaults to true
+ * @param boolean|null $includeEnd Defaults to true
  * @return string
  */
 function range(

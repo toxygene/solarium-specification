@@ -1,10 +1,9 @@
 # Solarium Specification library
 
-Create Solarium select queries using the [Specification pattern](https://en.wikipedia.org/wiki/Specification_pattern).
+Create Solarium queries for the [standard query parser](https://lucene.apache.org/solr/guide/6_6/the-standard-query-parser.html#the-standard-query-parser) using the [Specification pattern](https://en.wikipedia.org/wiki/Specification_pattern).
 
-# Usage
+## Example
 ```php
-use function SolariumSpecification\escapeDateTime;
 use Solarium\Core\Client\Client;
 use Solarium\QueryType\Select\Result\Result;
 use SolariumSpecification\ModifyQuery\CompositeModify;
@@ -13,13 +12,13 @@ use SolariumSpecification\ModifyQuery\SetHandler;
 use SolariumSpecification\ModifyQuery\SetResultClass;
 use SolariumSpecification\ModifyQuerySpecificationInterface;
 use SolariumSpecification\Repository;
-use SolariumSpecification\TermSpecificationInterface;
+use SolariumSpecification\Term\DateTime;
 use SolariumSpecification\Term\Modifier\AndX;
-use SolariumSpecification\Term\Modifier\Equals;
 use SolariumSpecification\Term\Modifier\Field;
-use SolariumSpecification\Term\Range;
 use SolariumSpecification\Term\Phrase;
-use SolariumSpecification\Term\SingleTerm;
+use SolariumSpecification\Term\Range;
+use SolariumSpecification\Term\TermInterface;
+use SolariumSpecification\TermSpecificationInterface;
 
 require 'vendor/autoload.php';
 
@@ -28,7 +27,7 @@ class UpdatedAfter implements TermSpecificationInterface
 {
     private $updatedAfter;
 
-    public function __construct(DateTime $updatedAfter)
+    public function __construct(DateTimeImmutable $updatedAfter)
     {
         $this->updatedAfter = $updatedAfter;
     }
@@ -37,7 +36,7 @@ class UpdatedAfter implements TermSpecificationInterface
     {
         return new Field(
             'last_updated_at',
-            new Range(new SingleTerm(escapeDateTime($this->updatedAfter)))
+            new Range(new DateTime($this->updatedAfter))
         );
     }
 }
@@ -47,7 +46,7 @@ class FilterByCategory implements TermSpecificationInterface
 {
     private $category;
 
-    public function __construct($category)
+    public function __construct(TermInterface $category)
     {
         $this->category = $category;
     }
@@ -56,7 +55,7 @@ class FilterByCategory implements TermSpecificationInterface
     {
         return new Field(
             'category',
-            new Phrase($this->category)
+            $this->category
         );
     }
 }
@@ -67,8 +66,8 @@ class RecentlyUpdatedElectronics implements TermSpecificationInterface
     public function getTerm(): TermInterface
     {
         return new AndX([
-            new UpdatedAfter(new DateTime('-1 week')),
-            new FilterByCategory(Helper::escapePhrase('Consumer Electronics'))
+            new UpdatedAfter(new DateTimeImmutable('-1 week')),
+            new FilterByCategory(new Phrase('Consumer Electronics'))
         ]);
     }
 }
@@ -111,7 +110,7 @@ class Products implements ModifyQuerySpecificationInterface
 $solariumClient = new Client();
 
 $repository = new Repository($solariumClient);
-
+var_dump((string) (new RecentlyUpdatedElectronics())->getTerm());
 var_dump(
     $repository->match(
         new RecentlyUpdatedElectronics(),

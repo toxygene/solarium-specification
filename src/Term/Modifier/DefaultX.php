@@ -4,27 +4,27 @@ declare(strict_types=1);
 
 namespace SolariumSpecification\Term\Modifier;
 
-use function SolariumSpecification\joinX;
+use function SolariumSpecification\defaultX;
 use SolariumSpecification\Term\TermInterface;
 use SolariumSpecification\TermSpecificationInterface;
 
-class DefaultX implements ModifierInterface, TermSpecificationInterface
+class DefaultX implements TermInterface, TermSpecificationInterface
 {
     /**
      * Children
      *
      * @var TermInterface[]
      */
-    private $terms;
+    private $specifications;
 
     /**
      * Constructor
      *
-     * @param TermInterface[] $terms
+     * @param TermSpecificationInterface[] $specifications
      */
-    public function __construct(array $terms = [])
+    public function __construct(array $specifications = [])
     {
-        $this->terms = $terms;
+        $this->specifications = $specifications;
     }
 
     /**
@@ -32,18 +32,25 @@ class DefaultX implements ModifierInterface, TermSpecificationInterface
      */
     public function __toString(): string
     {
-        return joinX($this->terms);
+        return defaultX(
+            array_map(
+                function(TermSpecificationInterface $specification) {
+                    return (string) $specification->getTerm();
+                },
+                $this->specifications
+            )
+        );
     }
 
     /**
      * Append a term
      *
-     * @param TermInterface $term
+     * @param TermSpecificationInterface $specification
      * @return self
      */
-    public function append(TermInterface $term): self
+    public function append(TermSpecificationInterface $specification): self
     {
-        $this->terms[] = $term;
+        $this->specifications[] = $specification;
 
         return $this;
     }

@@ -12,14 +12,14 @@ class Range implements TermInterface, TermSpecificationInterface
     /**
      * Start of the range to filter with
      *
-     * @var string
+     * @var TermInterface
      */
     private $start;
 
     /**
      * End of the range to filter with
      *
-     * @var string
+     * @var TermInterface
      */
     private $end;
 
@@ -40,24 +40,24 @@ class Range implements TermInterface, TermSpecificationInterface
     /**
      * Constructor
      *
-     * @param string|null $start
-     * @param string|null $end
+     * @param TermInterface|null $start
+     * @param TermInterface|null $end
      * @param bool|null $startInclusive
      * @param bool|null $endInclusive
      */
     public function __construct(
-        string $start = null,
-        string $end = null,
+        TermInterface $start = null,
+        TermInterface $end = null,
         bool $startInclusive = null,
         bool $endInclusive = null
     )
     {
         if (null === $start) {
-            $start = '*';
+            $start = new Literal('*');
         }
 
         if (null === $end) {
-            $end = '*';
+            $end = new Literal('*');
         }
 
         if (null === $startInclusive) {
@@ -80,8 +80,8 @@ class Range implements TermInterface, TermSpecificationInterface
     public function __toString(): string
     {
         return range(
-            $this->start,
-            $this->end,
+            (string) $this->start,
+            (string) $this->end,
             $this->startInclusive,
             $this->endInclusive
         );
