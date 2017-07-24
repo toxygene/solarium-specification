@@ -4,10 +4,9 @@ namespace SolariumSpecification\ModifyQuery;
 
 use RuntimeException;
 use Solarium\QueryType\Select\Query\Query;
-use Solarium\QueryType\Select\Query\Component\Facet\Field as ComponentFacetField;
-use SolariumSpecification\ModifyQuerySpecificationInterface;
+use Solarium\QueryType\Select\Query\Component\Facet\Field;
 
-class FacetField implements ModifyQueryInterface, ModifyQuerySpecificationInterface
+class FacetField implements ModifyQueryInterface, SpecificationInterface
 {
     /**
      * Add mode
@@ -214,7 +213,7 @@ class FacetField implements ModifyQueryInterface, ModifyQuerySpecificationInterf
      * Build the facet query
      *
      * @param Query $query
-     * @return ComponentFacetField
+     * @return Field
      */
     private function buildFacetField(Query $query)
     {

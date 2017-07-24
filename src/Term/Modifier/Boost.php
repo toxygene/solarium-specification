@@ -6,9 +6,9 @@ namespace SolariumSpecification\Term\Modifier;
 
 use function SolariumSpecification\boost;
 use SolariumSpecification\Term\TermInterface;
-use SolariumSpecification\TermSpecificationInterface;
+use SolariumSpecification\Term\SpecificationInterface;
 
-class Boost implements ModifierInterface, TermSpecificationInterface
+class Boost implements ModifierInterface, SpecificationInterface
 {
     /**
      * @var float|null

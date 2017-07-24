@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace SolariumSpecification\Test\Term;
 
 use PHPUnit\Framework\TestCase;
-use SolariumSpecification\Term\SingleTerm;
+use SolariumSpecification\Term\Single;
 
 /**
  * @coversDefaultClass \SolariumSpecification\Term\SingleTerm
@@ -18,7 +18,7 @@ class SingleTermTest extends TestCase
      */
     public function testPhraseIsEscaped()
     {
-        $term = new SingleTerm('test');
+        $term = new Single('test');
 
         $this->assertEquals('test', (string) $term);
     }
@@ -28,7 +28,7 @@ class SingleTermTest extends TestCase
      */
     public function testTermCanRetrieved()
     {
-        $spec = new SingleTerm('test');
+        $spec = new Single('test');
 
         $this->assertSame($spec, $spec->getTerm());
     }

@@ -7,10 +7,8 @@ namespace SolariumSpecification\ModifyQuery;
 use RuntimeException;
 use Solarium\QueryType\Select\Query\Query;
 use Solarium\QueryType\Select\Query\Component\Facet\Query as ComponentFacetQuery;
-use SolariumSpecification\ModifyQuerySpecificationInterface;
-use SolariumSpecification\TermSpecificationInterface;
 
-class FacetQuery implements ModifyQueryInterface, ModifyQuerySpecificationInterface
+class FacetQuery implements ModifyQueryInterface, SpecificationInterface
 {
     /**
      * Add mode
@@ -34,7 +32,7 @@ class FacetQuery implements ModifyQueryInterface, ModifyQuerySpecificationInterf
     const UPDATE = 'update';
 
     /**
-     * @var TermSpecificationInterface
+     * @var SpecificationInterface
      */
     private $termSpecification;
 
@@ -61,13 +59,13 @@ class FacetQuery implements ModifyQueryInterface, ModifyQuerySpecificationInterf
      * Constructor
      *
      * @param string $key
-     * @param TermSpecificationInterface $termSpecification
+     * @param \SolariumSpecification\Term\SpecificationInterface $termSpecification
      * @param array|null $exclude
      * @param string|null $mode
      */
     public function __construct(
         string $key,
-        TermSpecificationInterface $termSpecification,
+        SpecificationInterface $termSpecification,
         array $exclude = null,
         string $mode = null
     )

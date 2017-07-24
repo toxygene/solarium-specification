@@ -7,13 +7,11 @@ namespace SolariumSpecification\ModifyQuery;
 use RuntimeException;
 use Solarium\QueryType\Select\Query\Query;
 use Solarium\QueryType\Select\Query\FilterQuery as QueryFilterQuery;
-use SolariumSpecification\ModifyQuerySpecificationInterface;
-use SolariumSpecification\TermSpecificationInterface;
 
 /**
  * Filter query query modifier
  */
-class FilterQuery implements ModifyQueryInterface, ModifyQuerySpecificationInterface
+class FilterQuery implements ModifyQueryInterface, SpecificationInterface
 {
     /**
      * Add mode
@@ -46,7 +44,7 @@ class FilterQuery implements ModifyQueryInterface, ModifyQuerySpecificationInter
     /**
      * Term specification to use for the filter query
      *
-     * @var TermSpecificationInterface
+     * @var \SolariumSpecification\Term\SpecificationInterface
      */
     private $termSpecification;
 
@@ -68,13 +66,13 @@ class FilterQuery implements ModifyQueryInterface, ModifyQuerySpecificationInter
      * Constructor
      *
      * @param string $key
-     * @param TermSpecificationInterface $termSpecification
+     * @param SpecificationInterface $termSpecification
      * @param string[] $tags
      * @param string|null $mode
      */
     public function __construct(
         string $key,
-        TermSpecificationInterface $termSpecification,
+        SpecificationInterface $termSpecification,
         array $tags = null,
         string $mode = null
     )

@@ -10,7 +10,7 @@ use SolariumSpecification\ModifyQuery\CompositeModify;
 use SolariumSpecification\ModifyQuery\ModifyQueryInterface;
 use SolariumSpecification\ModifyQuery\SetHandler;
 use SolariumSpecification\ModifyQuery\SetResultClass;
-use SolariumSpecification\ModifyQuerySpecificationInterface;
+use SolariumSpecification\ModifyQuery\ModifyQuerySpecificationInterface;
 use SolariumSpecification\Repository;
 use SolariumSpecification\Term\DateTime;
 use SolariumSpecification\Term\Modifier\AndX;
@@ -18,7 +18,7 @@ use SolariumSpecification\Term\Modifier\Field;
 use SolariumSpecification\Term\Phrase;
 use SolariumSpecification\Term\Range;
 use SolariumSpecification\Term\TermInterface;
-use SolariumSpecification\TermSpecificationInterface;
+use SolariumSpecification\Term\TermSpecificationInterface;
 
 require 'vendor/autoload.php';
 

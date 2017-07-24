@@ -6,9 +6,9 @@ namespace SolariumSpecification\Term\Modifier;
 
 use function SolariumSpecification\field;
 use SolariumSpecification\Term\TermInterface;
-use SolariumSpecification\TermSpecificationInterface;
+use SolariumSpecification\Term\SpecificationInterface;
 
-class Field implements TermInterface, TermSpecificationInterface
+class Field implements TermInterface, SpecificationInterface
 {
     /**
      * Field to apply term to

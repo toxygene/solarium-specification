@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace SolariumSpecification;
 
 use Solarium\QueryType\Select\Result\Result;
+use SolariumSpecification\ModifyQuery\SpecificationInterface as ModifyQuerySpecificationInterface;
+use SolariumSpecification\Term\SpecificationInterface as TermSpecificationInterface;
 
 /**
  * Interface for a Solarium specification repository

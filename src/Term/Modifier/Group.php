@@ -6,9 +6,9 @@ namespace SolariumSpecification\Term\Modifier;
 
 use function SolariumSpecification\group;
 use SolariumSpecification\Term\TermInterface;
-use SolariumSpecification\TermSpecificationInterface;
+use SolariumSpecification\Term\SpecificationInterface;
 
-class Group implements ModifierInterface, TermSpecificationInterface
+class Group implements ModifierInterface, SpecificationInterface
 {
     /**
      * @var TermInterface

@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace SolariumSpecification\Term\Modifier;
 
 use SolariumSpecification\Term\TermInterface;
-use SolariumSpecification\TermSpecificationInterface;
+use SolariumSpecification\Term\SpecificationInterface;
 
-class Excluded implements ModifierInterface, TermSpecificationInterface
+class Excluded implements ModifierInterface, SpecificationInterface
 {
     /**
      * @var TermInterface

@@ -5,9 +5,8 @@ declare(strict_types=1);
 namespace SolariumSpecification\ModifyQuery;
 
 use Solarium\QueryType\Select\Query\Query;
-use SolariumSpecification\ModifyQuerySpecificationInterface;
 
-class SetHandler implements ModifyQueryInterface, ModifyQuerySpecificationInterface
+class SetHandler implements ModifyQueryInterface, SpecificationInterface
 {
     /**
      * @var string

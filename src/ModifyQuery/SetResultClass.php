@@ -5,12 +5,11 @@ declare(strict_types=1);
 namespace SolariumSpecification\ModifyQuery;
 
 use Solarium\QueryType\Select\Query\Query;
-use SolariumSpecification\ModifyQuerySpecificationInterface;
 
 /**
  * Set result class query modifier
  */
-class SetResultClass implements ModifyQueryInterface, ModifyQuerySpecificationInterface
+class SetResultClass implements ModifyQueryInterface, SpecificationInterface
 {
     /**
      * Result class

@@ -6,12 +6,11 @@ namespace SolariumSpecification\ModifyQuery;
 
 use RuntimeException;
 use Solarium\QueryType\Select\Query\Query;
-use SolariumSpecification\ModifyQuerySpecificationInterface;
 
 /**
  * Field list query modifier
  */
-class FieldList implements ModifyQueryInterface, ModifyQuerySpecificationInterface
+class FieldList implements ModifyQueryInterface, SpecificationInterface
 {
     /**
      * Add mode

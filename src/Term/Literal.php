@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace SolariumSpecification\Term;
 
-use SolariumSpecification\TermSpecificationInterface;
-
-class Literal implements TermInterface, TermSpecificationInterface
+class Literal implements TermInterface, SpecificationInterface
 {
     /**
      * @var string

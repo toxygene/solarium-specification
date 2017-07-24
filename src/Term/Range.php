@@ -5,9 +5,8 @@ declare(strict_types=1);
 namespace SolariumSpecification\Term;
 
 use function SolariumSpecification\range;
-use SolariumSpecification\TermSpecificationInterface;
 
-class Range implements TermInterface, TermSpecificationInterface
+class Range implements TermInterface, SpecificationInterface
 {
     /**
      * Start of the range to filter with

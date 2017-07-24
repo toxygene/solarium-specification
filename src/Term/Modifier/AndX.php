@@ -6,9 +6,9 @@ namespace SolariumSpecification\Term\Modifier;
 
 use function SolariumSpecification\andX;
 use SolariumSpecification\Term\TermInterface;
-use SolariumSpecification\TermSpecificationInterface;
+use SolariumSpecification\Term\SpecificationInterface;
 
-class AndX implements TermInterface, TermSpecificationInterface
+class AndX implements TermInterface, SpecificationInterface
 {
     /**
      * Children
@@ -20,7 +20,7 @@ class AndX implements TermInterface, TermSpecificationInterface
     /**
      * Constructor
      *
-     * @param TermSpecificationInterface[] $specifications
+     * @param SpecificationInterface[] $specifications
      */
     public function __construct(array $specifications = [])
     {
@@ -34,7 +34,7 @@ class AndX implements TermInterface, TermSpecificationInterface
     {
         return andX(
             array_map(
-                function(TermSpecificationInterface $specification) {
+                function(SpecificationInterface $specification) {
                     return (string) $specification->getTerm();
                 },
                 $this->specifications
@@ -45,10 +45,10 @@ class AndX implements TermInterface, TermSpecificationInterface
     /**
      * Append a term
      *
-     * @param TermSpecificationInterface $specification
+     * @param SpecificationInterface $specification
      * @return self
      */
-    public function append(TermSpecificationInterface $specification): self
+    public function append(SpecificationInterface $specification): self
     {
         $this->specifications[] = $specification;
 

@@ -6,9 +6,8 @@ namespace SolariumSpecification\ModifyQuery;
 
 use Solarium\QueryType\Select\Query\Component\Spatial;
 use Solarium\QueryType\Select\Query\Query;
-use SolariumSpecification\ModifyQuerySpecificationInterface;
 
-class SetSpatial implements ModifyQueryInterface, ModifyQuerySpecificationInterface
+class SetSpatial implements ModifyQueryInterface, SpecificationInterface
 {
     /**
      * Distance

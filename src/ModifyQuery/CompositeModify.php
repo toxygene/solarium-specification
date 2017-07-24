@@ -5,9 +5,8 @@ declare(strict_types=1);
 namespace SolariumSpecification\ModifyQuery;
 
 use Solarium\QueryType\Select\Query\Query;
-use SolariumSpecification\ModifyQuerySpecificationInterface;
 
-class CompositeModify implements ModifyQueryInterface, ModifyQuerySpecificationInterface
+class CompositeModify implements ModifyQueryInterface, SpecificationInterface
 {
     /**
      * @var ModifyQueryInterface[]

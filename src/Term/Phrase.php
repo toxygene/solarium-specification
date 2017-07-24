@@ -5,9 +5,8 @@ declare(strict_types=1);
 namespace SolariumSpecification\Term;
 
 use function SolariumSpecification\escapePhrase;
-use SolariumSpecification\TermSpecificationInterface;
 
-class Phrase implements TermInterface, TermSpecificationInterface
+class Phrase implements TermInterface, SpecificationInterface
 {
     /**
      * @var string

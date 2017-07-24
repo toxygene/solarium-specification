@@ -6,7 +6,7 @@ namespace SolariumSpecification\Test\Term\Modifier;
 
 use PHPUnit\Framework\TestCase;
 use SolariumSpecification\Term\Modifier\DefaultX;
-use SolariumSpecification\Term\TermInterface;
+use SolariumSpecification\Term\TermSpecificationInterface;
 
 /**
  * @coversDefaultClass \SolariumSpecification\Term\Modifier\DefaultX
@@ -20,24 +20,34 @@ class DefaultXTest extends TestCase
      */
     public function testTermsCanBeAndedTogether()
     {
-        /** @var \PHPUnit_Framework_MockObject_MockObject|TermInterface $mockTerm1 */
-        $mockTerm1 = $this->getMockBuilder(TermInterface::class)
+        /** @var \PHPUnit_Framework_MockObject_MockObject|TermSpecificationInterface $mockTermSpec1 */
+        $mockTermSpec1 = $this->getMockBuilder(TermSpecificationInterface::class)
+            ->setMethods(['__toString', 'getTerm'])
             ->getMock();
 
-        $mockTerm1->expects($this->once())
+        $mockTermSpec1->expects($this->once())
+            ->method('getTerm')
+            ->will($this->returnSelf());
+
+        $mockTermSpec1->expects($this->once())
             ->method('__toString')
             ->will($this->returnValue('a:b'));
 
-        /** @var \PHPUnit_Framework_MockObject_MockObject|TermInterface $mockTerm2 */
-        $mockTerm2 = $this->getMockBuilder(TermInterface::class)
+        /** @var \PHPUnit_Framework_MockObject_MockObject|TermSpecificationInterface $mockTermSpec2 */
+        $mockTermSpec2 = $this->getMockBuilder(TermSpecificationInterface::class)
+            ->setMethods(['__toString', 'getTerm'])
             ->getMock();
 
-        $mockTerm2->expects($this->once())
+        $mockTermSpec2->expects($this->once())
+            ->method('getTerm')
+            ->will($this->returnSelf());
+
+        $mockTermSpec2->expects($this->once())
             ->method('__toString')
             ->will($this->returnValue('c:d'));
 
-        $spec = new DefaultX([$mockTerm1]);
-        $spec->append($mockTerm2);
+        $spec = new DefaultX([$mockTermSpec1]);
+        $spec->append($mockTermSpec2);
 
         $this->assertEquals('a:b c:d', (string) $spec);
     }

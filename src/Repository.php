@@ -7,6 +7,8 @@ namespace SolariumSpecification;
 use Solarium\Core\Client\ClientInterface;
 use Solarium\QueryType\Select\Query\Query;
 use Solarium\QueryType\Select\Result\Result;
+use SolariumSpecification\ModifyQuery\SpecificationInterface as ModifyQuerySpecificationInterface;
+use SolariumSpecification\Term\SpecificationInterface as TermSpecificationInterface;
 
 /**
  * Solarium specification repository

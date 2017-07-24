@@ -6,9 +6,8 @@ namespace SolariumSpecification\Term;
 
 use DateTimeImmutable;
 use DateTimeZone;
-use SolariumSpecification\TermSpecificationInterface;
 
-class DateTime implements TermInterface, TermSpecificationInterface
+class DateTime implements TermInterface, SpecificationInterface
 {
     /**
      * Date time

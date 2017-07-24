@@ -6,12 +6,11 @@ namespace SolariumSpecification\ModifyQuery;
 
 use RuntimeException;
 use Solarium\QueryType\Select\Query\Query;
-use SolariumSpecification\ModifyQuerySpecificationInterface;
 
 /**
  * Sort query modifier
  */
-class Sort implements ModifyQueryInterface, ModifyQuerySpecificationInterface
+class Sort implements ModifyQueryInterface, SpecificationInterface
 {
     /**
      * Add mode
