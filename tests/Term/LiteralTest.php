@@ -5,17 +5,17 @@ declare(strict_types=1);
 namespace SolariumSpecification\Test\Term;
 
 use PHPUnit\Framework\TestCase;
-use SolariumSpecification\Term\Phrase;
+use SolariumSpecification\Term\Literal;
 use SolariumSpecification\Term\TermInterface;
 
 /**
- * @coversDefaultClass \SolariumSpecification\Term\Phrase
+ * @coversDefaultClass \SolariumSpecification\Term\Literal
  * @covers ::__construct
  */
-class PhraseTest extends TestCase
+class LiteralTest extends TestCase
 {
     /**
-     * @var Phrase
+     * @var Literal
      */
     private $term;
 
@@ -26,7 +26,7 @@ class PhraseTest extends TestCase
     {
         parent::setUp();
 
-        $this->term = new Phrase('asdf"!@#$%^&*()_+=-');
+        $this->term = new Literal('asdf!"Q@#$');
     }
 
     /**
@@ -40,18 +40,18 @@ class PhraseTest extends TestCase
     }
 
     /**
-     * @covers ::__toString
+     * @covers ::getTerm
      */
-    public function testPhraseIsEscaped()
+    public function testTermCanBeRetrieved()
     {
-        $this->assertEquals('"asdf\"!@#$%^&*()_+=-"', (string) $this->term);
+        $this->assertInstanceOf(TermInterface::class, $this->term->getTerm());
     }
 
     /**
-     * @covers ::getTerm
+     * @covers ::__toString
      */
-    public function testTermCanRetrieved()
+    public function testTermIsFormattedCorrectly()
     {
-        $this->assertInstanceOf(TermInterface::class, $this->term->getTerm());
+        $this->assertEquals('asdf!"Q@#$', (string) $this->term);
     }
 }

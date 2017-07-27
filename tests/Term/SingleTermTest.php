@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 use SolariumSpecification\Term\Single;
 
 /**
- * @coversDefaultClass \SolariumSpecification\Term\SingleTerm
+ * @coversDefaultClass \SolariumSpecification\Term\Single
  */
 class SingleTermTest extends TestCase
 {
@@ -18,9 +18,9 @@ class SingleTermTest extends TestCase
      */
     public function testPhraseIsEscaped()
     {
-        $term = new Single('test');
+        $term = new Single('asdf!@#$%^"');
 
-        $this->assertEquals('test', (string) $term);
+        $this->assertEquals('asdf\!@#$%\^\"', (string) $term);
     }
 
     /**

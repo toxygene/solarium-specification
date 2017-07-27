@@ -10,11 +10,11 @@ use SolariumSpecification\ModifyQuery\AddParam;
 
 /**
  * @coversDefaultClass \SolariumSpecification\ModifyQuery\AddParam
+ * @covers ::__construct
  */
 class AddParamTest extends TestCase
 {
     /**
-     * @covers ::__construct
      * @covers ::modify
      */
     public function testParameterIsAddedToTheQuery()
