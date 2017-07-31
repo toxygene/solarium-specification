@@ -7,8 +7,8 @@ namespace SolariumSpecification;
 use Solarium\Core\Client\ClientInterface;
 use Solarium\QueryType\Select\Query\Query;
 use Solarium\QueryType\Select\Result\Result;
-use SolariumSpecification\ModifyQuery\SpecificationInterface as ModifyQuerySpecificationInterface;
-use SolariumSpecification\Term\SpecificationInterface as TermSpecificationInterface;
+use SolariumSpecification\ModifyQuery\ModifyQueryInterface;
+use SolariumSpecification\Query\QueryInterface;
 
 /**
  * Solarium specification repository
@@ -34,36 +34,37 @@ class Repository implements RepositoryInterface
      * {@inheritdoc}
      */
     public function match(
-        TermSpecificationInterface $termSpecification = null,
-        ModifyQuerySpecificationInterface $modifyQuerySpecification = null): Result
+        QueryInterface $query = null,
+        ModifyQueryInterface $modifyQuery = null
+    ): Result
     {
         return $this->client
-            ->select($this->createQuery($termSpecification, $modifyQuerySpecification));
+            ->select($this->createQuery($query, $modifyQuery));
     }
     
     /**
      * Create a select query from a specification
      *
-     * @param TermSpecificationInterface|null $termSpecification
-     * @param ModifyQuerySpecificationInterface|null $modifyQuerySpecification
+     * @param QueryInterface|null $query
+     * @param ModifyQueryInterface|null $modifyQuery
      * @return Query
      */
     private function createQuery(
-        TermSpecificationInterface $termSpecification = null,
-        ModifyQuerySpecificationInterface $modifyQuerySpecification = null
+        QueryInterface $query = null,
+        ModifyQueryInterface $modifyQuery = null
     ): Query
     {
-        $query = $this->client
+        $q = $this->client
             ->createSelect();
 
-        if (null !== $termSpecification) {
-            $query->setQuery((string) $termSpecification->getTerm());
+        if (null !== $query) {
+            $q->setQuery($query->getString());
         }
 
-        if (null !== $modifyQuerySpecification) {
-            $modifyQuerySpecification->getModifyQuery()->modify($query);
+        if (null !== $modifyQuery) {
+            $modifyQuery->modify($q);
         }
 
-        return $query;
+        return $q;
     }
 }

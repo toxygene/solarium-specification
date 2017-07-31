@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace SolariumSpecification\Term;
+namespace SolariumSpecification\Query\Term;
 
 use function SolariumSpecification\escapePhrase;
 
-class Phrase implements TermInterface, SpecificationInterface
+class Phrase implements TermInterface
 {
     /**
      * @var string
@@ -26,16 +26,8 @@ class Phrase implements TermInterface, SpecificationInterface
     /**
      * {@inheritdoc}
      */
-    public function __toString(): string
+    public function getString(): string
     {
         return escapePhrase($this->phrase);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getTerm(): TermInterface
-    {
-        return $this;
     }
 }

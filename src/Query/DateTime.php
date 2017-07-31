@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace SolariumSpecification\Term;
+namespace SolariumSpecification\Query;
 
 use DateTimeImmutable;
 use DateTimeZone;
 
-class DateTime implements TermInterface, SpecificationInterface
+class DateTime implements TermInterface
 {
     /**
      * Date time
@@ -34,13 +34,5 @@ class DateTime implements TermInterface, SpecificationInterface
         return $this->dateTime
             ->setTimezone(new DateTimeZone('UTC'))
             ->format('Y-m-d\TH:i:s\Z');
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getTerm(): TermInterface
-    {
-        return $this;
     }
 }

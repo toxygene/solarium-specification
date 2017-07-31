@@ -2,23 +2,23 @@
 
 declare(strict_types=1);
 
-namespace SolariumSpecification\Term;
+namespace SolariumSpecification\Query;
 
 use function SolariumSpecification\range;
 
-class Range implements TermInterface, SpecificationInterface
+class Range implements QueryInterface
 {
     /**
      * Start of the range to filter with
      *
-     * @var TermInterface
+     * @var string
      */
     private $start;
 
     /**
      * End of the range to filter with
      *
-     * @var TermInterface
+     * @var string
      */
     private $end;
 
@@ -39,24 +39,24 @@ class Range implements TermInterface, SpecificationInterface
     /**
      * Constructor
      *
-     * @param TermInterface|null $start
-     * @param TermInterface|null $end
+     * @param string|null $start
+     * @param string|null $end
      * @param bool|null $startInclusive
      * @param bool|null $endInclusive
      */
     public function __construct(
-        TermInterface $start = null,
-        TermInterface $end = null,
+        string $start = null,
+        string $end = null,
         bool $startInclusive = null,
         bool $endInclusive = null
     )
     {
         if (null === $start) {
-            $start = new Literal('*');
+            $start = '*';
         }
 
         if (null === $end) {
-            $end = new Literal('*');
+            $end = '*';
         }
 
         if (null === $startInclusive) {
@@ -76,21 +76,13 @@ class Range implements TermInterface, SpecificationInterface
     /**
      * {@inheritdoc}
      */
-    public function __toString(): string
+    public function getString(): string
     {
         return range(
-            (string) $this->start,
-            (string) $this->end,
+            $this->start,
+            $this->end,
             $this->startInclusive,
             $this->endInclusive
         );
-    }
-    
-    /**
-     * {@inheritdoc}
-     */
-    public function getTerm(): TermInterface
-    {
-        return $this;
     }
 }

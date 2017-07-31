@@ -7,6 +7,7 @@ namespace SolariumSpecification\ModifyQuery;
 use RuntimeException;
 use Solarium\QueryType\Select\Query\Query;
 use Solarium\QueryType\Select\Query\Component\Facet\Query as ComponentFacetQuery;
+use SolariumSpecification\Query\QueryInterface;
 
 class FacetQuery implements ModifyQueryInterface, SpecificationInterface
 {
@@ -32,9 +33,9 @@ class FacetQuery implements ModifyQueryInterface, SpecificationInterface
     const UPDATE = 'update';
 
     /**
-     * @var SpecificationInterface
+     * @var QueryInterface
      */
-    private $termSpecification;
+    private $query;
 
     /**
      * @var array
@@ -59,13 +60,13 @@ class FacetQuery implements ModifyQueryInterface, SpecificationInterface
      * Constructor
      *
      * @param string $key
-     * @param \SolariumSpecification\Term\SpecificationInterface $termSpecification
+     * @param QueryInterface $query
      * @param array|null $exclude
      * @param string|null $mode
      */
     public function __construct(
         string $key,
-        SpecificationInterface $termSpecification,
+        QueryInterface $query,
         array $exclude = null,
         string $mode = null
     )
@@ -75,7 +76,7 @@ class FacetQuery implements ModifyQueryInterface, SpecificationInterface
         }
 
         $this->key = $key;
-        $this->termSpecification = $termSpecification;
+        $this->query = $query;
         $this->excludes = $exclude;
         $this->mode = $mode;
     }
@@ -86,7 +87,7 @@ class FacetQuery implements ModifyQueryInterface, SpecificationInterface
     public function modify(Query $query): ModifyQueryInterface
     {
         $facetQuery = $this->buildFacetQuery($query)
-            ->setQuery((string) $this->termSpecification->getTerm());
+            ->setQuery((string) $this->query->getString());
 
         // todo add facet query modification?
 

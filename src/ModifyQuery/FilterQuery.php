@@ -7,6 +7,7 @@ namespace SolariumSpecification\ModifyQuery;
 use RuntimeException;
 use Solarium\QueryType\Select\Query\Query;
 use Solarium\QueryType\Select\Query\FilterQuery as QueryFilterQuery;
+use SolariumSpecification\Query\QueryInterface;
 
 /**
  * Filter query query modifier
@@ -44,9 +45,9 @@ class FilterQuery implements ModifyQueryInterface, SpecificationInterface
     /**
      * Term specification to use for the filter query
      *
-     * @var \SolariumSpecification\Term\SpecificationInterface
+     * @var QueryInterface
      */
-    private $termSpecification;
+    private $query;
 
     /**
      * Mode
@@ -66,13 +67,13 @@ class FilterQuery implements ModifyQueryInterface, SpecificationInterface
      * Constructor
      *
      * @param string $key
-     * @param SpecificationInterface $termSpecification
+     * @param QueryInterface $query
      * @param string[] $tags
      * @param string|null $mode
      */
     public function __construct(
         string $key,
-        SpecificationInterface $termSpecification,
+        QueryInterface $query,
         array $tags = null,
         string $mode = null
     )
@@ -82,7 +83,7 @@ class FilterQuery implements ModifyQueryInterface, SpecificationInterface
         }
 
         $this->key = $key;
-        $this->termSpecification = $termSpecification;
+        $this->query = $query;
         $this->tags = $tags;
         $this->mode = $mode;
     }
@@ -93,7 +94,7 @@ class FilterQuery implements ModifyQueryInterface, SpecificationInterface
     public function modify(Query $query): ModifyQueryInterface
     {
         $filterQuery = $this->buildFilterQuery($query)
-            ->setQuery((string) $this->termSpecification->getTerm());
+            ->setQuery((string) $this->query->getString());
 
         // todo add support for modifying filter queries?
 

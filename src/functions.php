@@ -6,6 +6,7 @@ use DateTime;
 use DateTimeImmutable;
 use DateTimeInterface;
 use DateTimeZone;
+use RuntimeException;
 
 /**
  * Build a search with multiple terms joined with AND
@@ -15,7 +16,7 @@ use DateTimeZone;
  */
 function andX(array $terms): string
 {
-    return implode(' AND ', $terms);
+    return group(implode(' AND ', $terms));
 }
 
 /**
@@ -32,6 +33,10 @@ function boost(string $term, float $amount = null): string
             '%s^',
             $term
         );
+    }
+
+    if (0 > $amount) {
+        throw new RuntimeException('Boost amount must be > 0');
     }
 
     return sprintf(
@@ -65,7 +70,7 @@ function comment(string $term, string $comment): string
  */
 function defaultX(array $parts): string
 {
-    return implode(' ', $parts);
+    return group(implode(' ', $parts));
 }
 
 /**
@@ -160,22 +165,46 @@ function formatDateTimeInterface(DateTimeInterface $dateTime)
 /**
  * Build a fuzzy search
  *
- * @param string $term
- * @param int $distance
+ * @param string $singleTerm
+ * @param float $similarity
  * @return string
  */
-function fuzzy(string $term, int $distance = null): string
+function fuzzy(string $singleTerm, float $similarity = null): string
 {
-    if (null === $distance) {
+    if (0 > $similarity || 1 < $similarity) {
+        throw new RuntimeException('Similarity must be >= 0 and <= 1');
+    }
+
+    if (null === $similarity) {
         return sprintf(
             '%s~',
-            $term
+            $singleTerm
         );
     }
 
     return sprintf(
-        '%s~%d',
-        $term,
+        '%s~%s',
+        $singleTerm,
+        $similarity
+    );
+}
+
+/**
+ * Build a proximity search
+ *
+ * @param string $phrase
+ * @param int $distance
+ * @return string
+ */
+function proximity(string $phrase, int $distance): string
+{
+    if (0 > $distance) {
+        throw new RuntimeException('Distance must be > 0');
+    }
+
+    return sprintf(
+        '%s~%s',
+        $phrase,
         $distance
     );
 }
@@ -278,10 +307,12 @@ function lte(string $term): string
  */
 function not(string $x, string $y): string
 {
-    return sprintf(
-        '%s NOT %s',
-        $x,
-        $y
+    return group(
+        sprintf(
+            '%s NOT %s',
+            $x,
+            $y
+        )
     );
 }
 
@@ -293,7 +324,7 @@ function not(string $x, string $y): string
  */
 function orX(array $parts): string
 {
-    return implode(' OR ', $parts);
+    return group(implode(' OR ', $parts));
 }
 
 /**

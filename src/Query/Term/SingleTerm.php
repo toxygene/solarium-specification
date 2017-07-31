@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace SolariumSpecification\Term;
+namespace SolariumSpecification\Query\Term;
 
 use function SolariumSpecification\escapeTerm;
 
-class Single implements TermInterface, SpecificationInterface
+class SingleTerm implements TermInterface
 {
     /**
      * @var string
      */
     private $term;
-    
+
     /**
      * Constructor
      *
@@ -22,20 +22,12 @@ class Single implements TermInterface, SpecificationInterface
     {
         $this->term = $term;
     }
-    
+
     /**
      * {@inheritdoc}
      */
-    public function __toString(): string
+    public function getString(): string
     {
         return escapeTerm($this->term);
-    }
-    
-    /**
-     * {@inheritdoc}
-     */
-    public function getTerm(): TermInterface
-    {
-        return $this;
     }
 }

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace SolariumSpecification\Term;
+namespace SolariumSpecification\Query;
 
-class Literal implements TermInterface, SpecificationInterface
+class Literal implements QueryInterface
 {
     /**
      * @var string
@@ -24,16 +24,8 @@ class Literal implements TermInterface, SpecificationInterface
     /**
      * {@inheritdoc}
      */
-    public function __toString(): string
+    public function getString(): string
     {
         return $this->literal;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getTerm(): TermInterface
-    {
-        return $this;
     }
 }

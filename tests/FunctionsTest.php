@@ -27,6 +27,7 @@ use function SolariumSpecification\lt;
 use function SolariumSpecification\lte;
 use function SolariumSpecification\not;
 use function SolariumSpecification\orX;
+use function SolariumSpecification\proximity;
 use function SolariumSpecification\range;
 use function SolariumSpecification\required;
 
@@ -40,7 +41,7 @@ class FunctionsTest extends TestCase
      */
     public function testTermsCanBeAndedTogether()
     {
-        $this->assertEquals('x AND y', andX(['x', 'y']));
+        $this->assertEquals('(x AND y)', andX(['x', 'y']));
     }
 
     /**
@@ -64,7 +65,7 @@ class FunctionsTest extends TestCase
      */
     public function testTermsCanBeJoinedWithTheDefaultOperator()
     {
-        $this->assertEquals('x y', defaultX(['x', 'y']));
+        $this->assertEquals('(x y)', defaultX(['x', 'y']));
     }
 
     /**
@@ -134,7 +135,15 @@ class FunctionsTest extends TestCase
      */
     public function testTermsCanBeFuzzySearched()
     {
-        $this->assertEquals('term~12', fuzzy('term', 12));
+        $this->assertEquals('term~0.2', fuzzy('term', 0.2));
+    }
+
+    /**
+     * @cover \SolariumSpecification\proximity
+     */
+    public function testPhraseCanBeProximitySearched()
+    {
+        $this->assertEquals('"two terms"~10', proximity('"two terms"', 10));
     }
 
     /**
@@ -190,7 +199,7 @@ class FunctionsTest extends TestCase
      */
     public function testTermsCanBeJoinedWithNot()
     {
-        $this->assertEquals('a NOT b', not('a', 'b'));
+        $this->assertEquals('(a NOT b)', not('a', 'b'));
     }
 
     /**
@@ -198,7 +207,7 @@ class FunctionsTest extends TestCase
      */
     public function testTermsCanBeOredTogether()
     {
-        $this->assertEquals('x OR y', orX(['x', 'y']));
+        $this->assertEquals('(x OR y)', orX(['x', 'y']));
     }
 
     /**
