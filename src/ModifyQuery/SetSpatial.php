@@ -7,7 +7,7 @@ namespace SolariumSpecification\ModifyQuery;
 use Solarium\QueryType\Select\Query\Component\Spatial;
 use Solarium\QueryType\Select\Query\Query;
 
-class SetSpatial implements ModifyQueryInterface, SpecificationInterface
+class SetSpatial implements ModifyQueryInterface
 {
     /**
      * Distance
@@ -64,14 +64,6 @@ class SetSpatial implements ModifyQueryInterface, SpecificationInterface
             $spatial->setPoint($this->point);
         }
 
-        return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getModifyQuery(): ModifyQueryInterface
-    {
         return $this;
     }
 }

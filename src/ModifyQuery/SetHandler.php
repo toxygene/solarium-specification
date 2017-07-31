@@ -6,7 +6,7 @@ namespace SolariumSpecification\ModifyQuery;
 
 use Solarium\QueryType\Select\Query\Query;
 
-class SetHandler implements ModifyQueryInterface, SpecificationInterface
+class SetHandler implements ModifyQueryInterface
 {
     /**
      * @var string
@@ -30,14 +30,6 @@ class SetHandler implements ModifyQueryInterface, SpecificationInterface
     {
         $query->setHandler($this->handler);
 
-        return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getModifyQuery(): ModifyQueryInterface
-    {
         return $this;
     }
 }

@@ -9,7 +9,7 @@ use Solarium\QueryType\Select\Query\Query;
 /**
  * Set result class query modifier
  */
-class SetResultClass implements ModifyQueryInterface, SpecificationInterface
+class SetResultClass implements ModifyQueryInterface
 {
     /**
      * Result class
@@ -35,14 +35,6 @@ class SetResultClass implements ModifyQueryInterface, SpecificationInterface
     {
         $query->setResultClass($this->resultClass);
         
-        return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getModifyQuery(): ModifyQueryInterface
-    {
         return $this;
     }
 }

@@ -10,7 +10,7 @@ use Solarium\QueryType\Select\Query\Query;
 /**
  * Sort query modifier
  */
-class Sort implements ModifyQueryInterface, SpecificationInterface
+class Sort implements ModifyQueryInterface
 {
     /**
      * Add mode
@@ -102,14 +102,6 @@ class Sort implements ModifyQueryInterface, SpecificationInterface
                 throw new RuntimeException(sprintf('Unknown mode "%s"', $this->mode));
         }
 
-        return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getModifyQuery(): ModifyQueryInterface
-    {
         return $this;
     }
 }

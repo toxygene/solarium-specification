@@ -9,7 +9,7 @@ use Solarium\QueryType\Select\Query\Query;
 /**
  * Set start query modifier
  */
-class SetStart implements ModifyQueryInterface, SpecificationInterface
+class SetStart implements ModifyQueryInterface
 {
     /**
      * Start
@@ -35,14 +35,6 @@ class SetStart implements ModifyQueryInterface, SpecificationInterface
     {
         $query->setStart($this->start);
         
-        return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getModifyQuery(): ModifyQueryInterface
-    {
         return $this;
     }
 }

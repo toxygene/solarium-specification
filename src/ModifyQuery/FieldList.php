@@ -10,7 +10,7 @@ use Solarium\QueryType\Select\Query\Query;
 /**
  * Field list query modifier
  */
-class FieldList implements ModifyQueryInterface, SpecificationInterface
+class FieldList implements ModifyQueryInterface
 {
     /**
      * Add mode
@@ -75,14 +75,6 @@ class FieldList implements ModifyQueryInterface, SpecificationInterface
         }
 
         
-        return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getModifyQuery(): ModifyQueryInterface
-    {
         return $this;
     }
 }

@@ -6,7 +6,7 @@ namespace SolariumSpecification\ModifyQuery;
 
 use Solarium\QueryType\Select\Query\Query;
 
-class AddParam implements ModifyQueryInterface, SpecificationInterface
+class AddParam implements ModifyQueryInterface
 {
     /**
      * @var string
@@ -37,14 +37,6 @@ class AddParam implements ModifyQueryInterface, SpecificationInterface
     {
         $query->addParam($this->name, $this->value);
 
-        return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getModifyQuery(): ModifyQueryInterface
-    {
         return $this;
     }
 }

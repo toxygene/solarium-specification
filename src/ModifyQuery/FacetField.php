@@ -6,7 +6,7 @@ use RuntimeException;
 use Solarium\QueryType\Select\Query\Query;
 use Solarium\QueryType\Select\Query\Component\Facet\Field;
 
-class FacetField implements ModifyQueryInterface, SpecificationInterface
+class FacetField implements ModifyQueryInterface
 {
     /**
      * Add mode
@@ -239,13 +239,5 @@ class FacetField implements ModifyQueryInterface, SpecificationInterface
             default:
                 throw new RuntimeException(sprintf('Unknown mode "%s"', $this->mode));
         }
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getModifyQuery(): ModifyQueryInterface
-    {
-        return $this;
     }
 }

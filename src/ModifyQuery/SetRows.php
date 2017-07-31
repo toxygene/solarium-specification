@@ -9,7 +9,7 @@ use Solarium\QueryType\Select\Query\Query;
 /**
  * Set rows query modifier
  */
-class SetRows implements ModifyQueryInterface, SpecificationInterface
+class SetRows implements ModifyQueryInterface
 {
     /**
      * Rows
@@ -35,14 +35,6 @@ class SetRows implements ModifyQueryInterface, SpecificationInterface
     {
         $query->setRows($this->rows);
         
-        return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getModifyQuery(): ModifyQueryInterface
-    {
         return $this;
     }
 }

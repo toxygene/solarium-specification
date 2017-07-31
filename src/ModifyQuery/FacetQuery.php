@@ -9,7 +9,7 @@ use Solarium\QueryType\Select\Query\Query;
 use Solarium\QueryType\Select\Query\Component\Facet\Query as ComponentFacetQuery;
 use SolariumSpecification\Query\QueryInterface;
 
-class FacetQuery implements ModifyQueryInterface, SpecificationInterface
+class FacetQuery implements ModifyQueryInterface
 {
     /**
      * Add mode
@@ -95,14 +95,6 @@ class FacetQuery implements ModifyQueryInterface, SpecificationInterface
             $facetQuery->setExcludes($this->excludes);
         }
 
-        return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getModifyQuery(): ModifyQueryInterface
-    {
         return $this;
     }
 

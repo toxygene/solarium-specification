@@ -12,7 +12,7 @@ use SolariumSpecification\Query\QueryInterface;
 /**
  * Filter query query modifier
  */
-class FilterQuery implements ModifyQueryInterface, SpecificationInterface
+class FilterQuery implements ModifyQueryInterface
 {
     /**
      * Add mode
@@ -102,14 +102,6 @@ class FilterQuery implements ModifyQueryInterface, SpecificationInterface
             $filterQuery->setTags($this->tags);
         }
         
-        return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getModifyQuery(): ModifyQueryInterface
-    {
         return $this;
     }
 
