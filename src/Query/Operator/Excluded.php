@@ -27,8 +27,8 @@ class Excluded implements QueryInterface
     /**
      * {@inheritdoc}
      */
-    public function getString(): string
+    public function getQueryString(): string
     {
-        return excluded($this->query->getString());
+        return excluded($this->query->getQueryString());
     }
 }

@@ -35,10 +35,10 @@ class Proximity implements QueryInterface
     /**
      * {@inheritdoc}
      */
-    public function getString(): string
+    public function getQueryString(): string
     {
         return proximity(
-            $this->phrase->getString(),
+            $this->phrase->getQueryString(),
             $this->distance
         );
     }

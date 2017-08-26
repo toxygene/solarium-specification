@@ -37,11 +37,11 @@ class Not implements QueryInterface
     /**
      * {@inheritdoc}
      */
-    public function getString(): string
+    public function getQueryString(): string
     {
         return not(
-            $this->contains->getString(),
-            $this->excludes->getString()
+            $this->contains->getQueryString(),
+            $this->excludes->getQueryString()
         );
     }
 }

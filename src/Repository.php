@@ -58,7 +58,7 @@ class Repository implements RepositoryInterface
             ->createSelect();
 
         if (null !== $query) {
-            $q->setQuery($query->getString());
+            $q->setQuery($query->getQueryString());
         }
 
         if (null !== $modifyQuery) {

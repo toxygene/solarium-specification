@@ -5,25 +5,23 @@ Create Solarium queries for the [standard query parser](https://lucene.apache.or
 ## Example
 ```php
 use Solarium\Core\Client\Client;
+use Solarium\QueryType\Select\Query\Query;
 use Solarium\QueryType\Select\Result\Result;
-use SolariumSpecification\ModifyQuery\CompositeModify;
 use SolariumSpecification\ModifyQuery\ModifyQueryInterface;
 use SolariumSpecification\ModifyQuery\SetHandler;
 use SolariumSpecification\ModifyQuery\SetResultClass;
-use SolariumSpecification\ModifyQuery\ModifyQuerySpecificationInterface;
+use SolariumSpecification\Query\DateTime;
+use SolariumSpecification\Query\Field;
+use SolariumSpecification\Query\Operator\AndX;
+use SolariumSpecification\Query\Operator\OrX;
+use SolariumSpecification\Query\QueryInterface;
+use SolariumSpecification\Query\Range;
+use SolariumSpecification\Query\Term\Phrase;
+use SolariumSpecification\Query\Term\SingleTerm;
 use SolariumSpecification\Repository;
-use SolariumSpecification\Term\DateTime;
-use SolariumSpecification\Term\Modifier\AndX;
-use SolariumSpecification\Term\Modifier\Field;
-use SolariumSpecification\Term\Phrase;
-use SolariumSpecification\Term\Range;
-use SolariumSpecification\Term\TermInterface;
-use SolariumSpecification\Term\TermSpecificationInterface;
 
-require 'vendor/autoload.php';
-
-// Only match results with a `last_updated_at` after a supplied DateTime
-class UpdatedAfter implements TermSpecificationInterface
+// Only match results with a `last_updated_at` after a supplied DateTimeImmutable
+class UpdatedAfter implements QueryInterface
 {
     private $updatedAfter;
 
@@ -32,43 +30,43 @@ class UpdatedAfter implements TermSpecificationInterface
         $this->updatedAfter = $updatedAfter;
     }
 
-    public function getTerm(): TermInterface
+    public function getQueryString(): string
     {
-        return new Field(
+        return (new Field(
             'last_updated_at',
-            new Range(new DateTime($this->updatedAfter))
-        );
+            new Range((new DateTime($this->updatedAfter))->getQueryString())
+        ))->getQueryString();
     }
 }
 
 // Only match results assign to a supplied `category`
-class FilterByCategory implements TermSpecificationInterface
+class FilterByCategory implements QueryInterface
 {
     private $category;
 
-    public function __construct(TermInterface $category)
+    public function __construct(QueryInterface $category)
     {
         $this->category = $category;
     }
 
-    public function getTerm(): TermInterface
+    public function getQueryString(): string
     {
-        return new Field(
+        return (new Field(
             'category',
             $this->category
-        );
+        ))->getQueryString();
     }
 }
 
 // Combine `UpdatedAfter` for the last week and `FilterByCategory` for 'Consumer Electronics'
-class RecentlyUpdatedElectronics implements TermSpecificationInterface
+class RecentlyUpdatedElectronics implements QueryInterface
 {
-    public function getTerm(): TermInterface
+    public function getQueryString(): string
     {
-        return new AndX([
+        return (new AndX([
             new UpdatedAfter(new DateTimeImmutable('-1 week')),
-            new FilterByCategory(new Phrase('Consumer Electronics'))
-        ]);
+            new FilterByCategory(new OrX([new Phrase('Consumer Electronics'), new SingleTerm('Electronics')]))
+        ]))->getQueryString();
     }
 }
 
@@ -78,32 +76,36 @@ class ProductsResult extends Result
 }
 
 // Set the result class to `ProductResult`
-class ProductResult implements ModifyQuerySpecificationInterface
+class ProductResult implements ModifyQueryInterface
 {
-    public function getModifyQuery(): ModifyQueryInterface
+    public function modify(Query $query): ModifyQueryInterface
     {
-        return new SetResultClass(ProductsResult::class);
+        (new SetResultClass(ProductsResult::class))->modify($query);
+
+        return $this;
     }
 }
 
 // Set the query handler to `Products`
-class ProductHandler implements ModifyQuerySpecificationInterface
+class ProductHandler implements ModifyQueryInterface
 {
-    public function getModifyQuery(): ModifyQueryInterface
+    public function modify(Query $query): ModifyQueryInterface
     {
-        return new SetHandler('Products');
+        (new SetHandler('Products'))->modify($query);
+
+        return $this;
     }
 }
 
 // Combine the ProductResult and ProductHandler modify specifications
-class Products implements ModifyQuerySpecificationInterface
+class Products implements ModifyQueryInterface
 {
-    public function getModifyQuery(): ModifyQueryInterface
+    public function modify(Query $query): ModifyQueryInterface
     {
-        return new CompositeModify([
-            new ProductResult(),
-            new ProductHandler()
-        ]);
+        (new ProductResult())->modify($query);
+        (new ProductHandler())->modify($query);
+
+        return $this;
     }
 }
 
@@ -119,7 +121,7 @@ var_dump(
 );
 
 /*
-The query will be 'last_updated_at:[2016-07-06T19:36:23Z] AND category:"Consumer Electronics"'.
+The query will be 'last_updated_at:[2016-07-06T19:36:23Z TO *] AND category:("Consumer Electronics" OR "Electronics")'.
 The handler is Products.
 The result class is ProductResult.
 */

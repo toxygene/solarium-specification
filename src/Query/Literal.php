@@ -24,7 +24,7 @@ class Literal implements QueryInterface
     /**
      * {@inheritdoc}
      */
-    public function getString(): string
+    public function getQueryString(): string
     {
         return $this->literal;
     }

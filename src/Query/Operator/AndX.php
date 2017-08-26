@@ -40,12 +40,12 @@ class AndX implements QueryInterface
     /**
      * {@inheritdoc}
      */
-    public function getString(): string
+    public function getQueryString(): string
     {
         return andX(
             array_map(
                 function(QueryInterface $query) {
-                    return $query->getString();
+                    return $query->getQueryString();
                 },
                 $this->queries
             )

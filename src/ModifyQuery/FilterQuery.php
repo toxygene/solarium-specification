@@ -94,7 +94,7 @@ class FilterQuery implements ModifyQueryInterface
     public function modify(Query $query): ModifyQueryInterface
     {
         $filterQuery = $this->buildFilterQuery($query)
-            ->setQuery((string) $this->query->getString());
+            ->setQuery((string) $this->query->getQueryString());
 
         // todo add support for modifying filter queries?
 

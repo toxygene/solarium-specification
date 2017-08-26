@@ -34,8 +34,8 @@ class Required implements QueryInterface
     /**
      * {@inheritdoc}
      */
-    public function getString(): string
+    public function getQueryString(): string
     {
-        return required($this->query->getString());
+        return required($this->query->getQueryString());
     }
 }

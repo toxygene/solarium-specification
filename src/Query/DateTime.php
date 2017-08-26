@@ -6,8 +6,9 @@ namespace SolariumSpecification\Query;
 
 use DateTimeImmutable;
 use DateTimeZone;
+use function SolariumSpecification\formatDateTimeImmutable;
 
-class DateTime implements TermInterface
+class DateTime implements QueryInterface
 {
     /**
      * Date time
@@ -29,10 +30,8 @@ class DateTime implements TermInterface
     /**
      * {@inheritdoc}
      */
-    public function __toString(): string
+    public function getQueryString(): string
     {
-        return $this->dateTime
-            ->setTimezone(new DateTimeZone('UTC'))
-            ->format('Y-m-d\TH:i:s\Z');
+        return formatDateTimeImmutable($this->dateTime);
     }
 }

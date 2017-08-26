@@ -31,11 +31,11 @@ class Field implements QueryInterface
     /**
      * {@inheritdoc}
      */
-    public function getString(): string
+    public function getQueryString(): string
     {
         return field(
             $this->field,
-            $this->query->getString()
+            $this->query->getQueryString()
         );
     }
 }

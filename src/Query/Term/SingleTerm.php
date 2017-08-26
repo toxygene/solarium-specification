@@ -26,7 +26,7 @@ class SingleTerm implements TermInterface
     /**
      * {@inheritdoc}
      */
-    public function getString(): string
+    public function getQueryString(): string
     {
         return escapeTerm($this->term);
     }

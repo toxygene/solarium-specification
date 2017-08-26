@@ -76,7 +76,7 @@ class Range implements QueryInterface
     /**
      * {@inheritdoc}
      */
-    public function getString(): string
+    public function getQueryString(): string
     {
         return range(
             $this->start,

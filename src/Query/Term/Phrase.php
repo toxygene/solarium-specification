@@ -26,7 +26,7 @@ class Phrase implements TermInterface
     /**
      * {@inheritdoc}
      */
-    public function getString(): string
+    public function getQueryString(): string
     {
         return escapePhrase($this->phrase);
     }

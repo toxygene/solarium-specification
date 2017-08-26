@@ -87,7 +87,7 @@ class FacetQuery implements ModifyQueryInterface
     public function modify(Query $query): ModifyQueryInterface
     {
         $facetQuery = $this->buildFacetQuery($query)
-            ->setQuery((string) $this->query->getString());
+            ->setQuery((string) $this->query->getQueryString());
 
         // todo add facet query modification?
 

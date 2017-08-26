@@ -26,8 +26,8 @@ class Group implements QueryInterface
     /**
      * {@inheritdoc}
      */
-    public function getString(): string
+    public function getQueryString(): string
     {
-        return group($this->query->getString());
+        return group($this->query->getQueryString());
     }
 }

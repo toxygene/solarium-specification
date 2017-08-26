@@ -33,10 +33,10 @@ class Fuzzy implements QueryInterface
     /**
      * {@inheritdoc}
      */
-    public function getString(): string
+    public function getQueryString(): string
     {
         return fuzzy(
-            $this->singleTerm->getString(),
+            $this->singleTerm->getQueryString(),
             $this->similarity
         );
     }

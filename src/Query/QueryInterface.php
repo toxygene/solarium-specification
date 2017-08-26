@@ -11,5 +11,5 @@ interface QueryInterface
      *
      * @return string
      */
-    public function getString(): string;
+    public function getQueryString(): string;
 }
