@@ -11,16 +11,16 @@ use function SolariumSpecification\excluded;
 class Excluded implements QueryInterface, QuerySpecificationInterface
 {
     /**
-     * @var QueryInterface
+     * @var QuerySpecificationInterface
      */
     private $query;
 
     /**
      * Constructor
      *
-     * @param QueryInterface $query
+     * @param QuerySpecificationInterface  $query
      */
-    public function __construct(QueryInterface $query)
+    public function __construct(QuerySpecificationInterface $query)
     {
         $this->query = $query;
     }
@@ -38,6 +38,6 @@ class Excluded implements QueryInterface, QuerySpecificationInterface
      */
     public function getQueryString(): string
     {
-        return excluded($this->query->getQueryString());
+        return excluded($this->query->getQuery()->getQueryString());
     }
 }
