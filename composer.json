@@ -1,0 +1,29 @@
+{
+    "name": "toxygene/solarium-specification",
+    "description": "Specification pattern library for Solarium select queries",
+    "type": "library",
+    "require": {
+        "solarium/solarium": "^3.8"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^6.2",
+        "mockery/mockery": "^0.9.9"
+    },
+    "authors": [
+        {
+            "name": "Justin Hendrickson",
+            "email": "justin.hendrickson@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "SolariumSpecification\\": "src/"
+        },
+        "files": ["src/functions.php"]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "SolariumSpecification\\Test\\": "tests/"
+        }
+    }
+}
