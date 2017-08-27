@@ -5,11 +5,12 @@ Create Solarium queries for the [standard query parser](https://lucene.apache.or
 ## Example
 ```php
 use Solarium\Core\Client\Client;
-use Solarium\QueryType\Select\Query\Query;
 use Solarium\QueryType\Select\Result\Result;
 use SolariumSpecification\ModifyQueryInterface;
-use SolariumSpecification\ModifyQuery\SetHandler;
-use SolariumSpecification\ModifyQuery\SetResultClass;
+use SolariumSpecification\ModifyQuerySpecification\CompositeModifyQuerySpecification;
+use SolariumSpecification\ModifyQuerySpecification\SetHandler;
+use SolariumSpecification\ModifyQuerySpecification\SetResultClass;
+use SolariumSpecification\ModifyQuerySpecificationInterface;
 use SolariumSpecification\QueryInterface;
 use SolariumSpecification\QuerySpecification\DateTime;
 use SolariumSpecification\QuerySpecification\Field;
@@ -19,7 +20,6 @@ use SolariumSpecification\QuerySpecificationInterface;
 use SolariumSpecification\QuerySpecification\Range;
 use SolariumSpecification\QuerySpecification\Term\Phrase;
 use SolariumSpecification\QuerySpecification\Term\SingleTerm;
-use SolariumSpecification\Repository;
 
 // Only match results with a `last_updated_at` after a supplied DateTime
 class UpdatedAfter implements QuerySpecificationInterface
@@ -77,36 +77,32 @@ class ProductsResult extends Result
 }
 
 // Set the result class to `ProductResult`
-class ProductResult implements ModifyQueryInterface
+class ProductResult implements ModifyQuerySpecificationInterface
 {
-    public function modify(Query $query): ModifyQueryInterface
+    public function getModifyQuery(): ModifyQueryInterface
     {
-        (new SetResultClass(ProductsResult::class))->modify($query);
-
-        return $this;
+        return new SetResultClass(ProductsResult::class);
     }
 }
 
 // Set the query handler to `Products`
-class ProductHandler implements ModifyQueryInterface
+class ProductHandler implements ModifyQuerySpecificationInterface
 {
-    public function modify(Query $query): ModifyQueryInterface
+    public function getModifyQuery(): ModifyQueryInterface
     {
-        (new SetHandler('Products'))->modify($query);
-
-        return $this;
+        return new SetHandler('Products');
     }
 }
 
 // Combine the ProductResult and ProductHandler modify specifications
-class Products implements ModifyQueryInterface
+class Products implements ModifyQuerySpecificationInterface
 {
-    public function modify(Query $query): ModifyQueryInterface
+    public function getModifyQuery(): ModifyQueryInterface
     {
-        (new ProductResult())->modify($query);
-        (new ProductHandler())->modify($query);
-
-        return $this;
+        return new CompositeModifyQuerySpecification([
+            new ProductResult(),
+            new ProductHandler()
+        ]);
     }
 }
 
@@ -115,7 +111,8 @@ var_dump((new RecentlyUpdatedElectronics())->getQuery()->getQueryString()); // '
 $solariumClient = new Client();
 $query = $solariumClient->createSelect();
 
-(new Products())->modify($query);
+(new Products())->getModifyQuery()->modify($query);
 
 var_dump($query->getResultClass()); // 'ProductsResult'
 var_dump($query->getHandler()); // 'Products'
+```
