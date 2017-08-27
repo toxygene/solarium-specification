@@ -52,7 +52,7 @@ class FieldTest extends TestCase
     }
 
     /**
-     * @covers ::getString
+     * @covers ::getQueryString
      */
     public function testQueryCanBeFielded()
     {

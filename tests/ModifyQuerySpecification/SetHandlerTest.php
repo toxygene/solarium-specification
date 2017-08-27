@@ -9,7 +9,7 @@ use Solarium\QueryType\Select\Query\Query;
 use SolariumSpecification\ModifyQuerySpecification\SetHandler;
 
 /**
- * @coversDefaultClass \SolariumSpecification\ModifyQuery\SetResultClass
+ * @coversDefaultClass \SolariumSpecification\ModifyQuerySpecification\SetResultClass
  */
 class SetHandlerTest extends TestCase
 {

@@ -50,7 +50,7 @@ class GroupTest extends TestCase
     }
 
     /**
-     * @covers ::getString
+     * @covers ::getQueryString
      */
     public function testQueryCanBeGrouped()
     {

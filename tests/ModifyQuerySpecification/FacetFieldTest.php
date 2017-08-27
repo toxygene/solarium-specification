@@ -11,7 +11,7 @@ use Solarium\QueryType\Select\Query\Query;
 use SolariumSpecification\ModifyQuerySpecification\FacetField;
 
 /**
- * @coversDefaultClass \SolariumSpecification\ModifyQuery\FacetField
+ * @coversDefaultClass \SolariumSpecification\ModifyQuerySpecification\FacetField
  */
 class FacetFieldTest extends TestCase
 {

@@ -48,7 +48,7 @@ class DateTimeTest extends TestCase
     }
 
     /**
-     * @covers ::getString
+     * @covers ::getQueryString
      */
     public function testDateTimeIsConvertedToIso8601ForUtc()
     {

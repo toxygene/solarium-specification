@@ -10,7 +10,7 @@ use Solarium\QueryType\Select\Query\Query;
 use SolariumSpecification\ModifyQuerySpecification\FieldList;
 
 /**
- * @coversDefaultClass \SolariumSpecification\ModifyQuery\FieldList
+ * @coversDefaultClass \SolariumSpecification\ModifyQuerySpecification\FieldList
  */
 class FieldListTest extends TestCase
 {

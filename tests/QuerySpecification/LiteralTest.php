@@ -40,7 +40,7 @@ class LiteralTest extends TestCase
     }
 
     /**
-     * @covers ::getString
+     * @covers ::getQueryString
      */
     public function testLiteralQueryCanBeMade()
     {

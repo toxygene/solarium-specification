@@ -9,7 +9,7 @@ use Solarium\QueryType\Select\Query\Query;
 use SolariumSpecification\ModifyQuerySpecification\SetRows;
 
 /**
- * @coversDefaultClass \SolariumSpecification\ModifyQuery\SetRows
+ * @coversDefaultClass \SolariumSpecification\ModifyQuerySpecification\SetRows
  */
 class SetRowsTest extends TestCase
 {

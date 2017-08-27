@@ -9,7 +9,7 @@ use Solarium\QueryType\Select\Query\Query;
 use SolariumSpecification\ModifyQuerySpecification\SetStart;
 
 /**
- * @coversDefaultClass \SolariumSpecification\ModifyQuery\SetStart
+ * @coversDefaultClass \SolariumSpecification\ModifyQuerySpecification\SetStart
  */
 class SetStartTest extends TestCase
 {
