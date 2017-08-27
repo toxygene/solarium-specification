@@ -9,12 +9,12 @@ use Mockery\MockInterface;
 use PHPUnit\Framework\TestCase;
 use Solarium\QueryType\Select\Query\Query;
 use SolariumSpecification\ModifyQueryInterface;
-use SolariumSpecification\ModifyQuerySpecification\SetRows;
+use SolariumSpecification\ModifyQuerySpecification\SetResultClass;
 
 /**
- * @coversDefaultClass \SolariumSpecification\ModifyQuerySpecification\SetRows
+ * @coversDefaultClass \SolariumSpecification\ModifyQuerySpecification\SetResultClass
  */
-class SetRowsTest extends TestCase
+class SetResultClassTest extends TestCase
 {
     /**
      * {@inheritdoc}
@@ -31,7 +31,7 @@ class SetRowsTest extends TestCase
      */
     public function testModifyQueryCanBeRetrieved()
     {
-        $setRows = new SetRows(1);
+        $setRows = new SetResultClass('Test');
 
         $this->assertInstanceOf(ModifyQueryInterface::class, $setRows->getModifyQuery());
     }
@@ -40,14 +40,14 @@ class SetRowsTest extends TestCase
      * @covers ::__construct
      * @covers ::modify
      */
-    public function testSetRows()
+    public function testSetResultClass()
     {
         /** @var Query|MockInterface $mockQuery */
         $mockQuery = Mockery::mock(Query::class, function (MockInterface $mock) {
-            $mock->shouldReceive('setRows')->once()->with(10)->andReturnSelf();
+            $mock->shouldReceive('setResultClass')->once()->with('test')->andReturnSelf();
         });
 
-        $spec = new SetRows(10);
+        $spec = new SetResultClass('test');
         
         $this->assertSame($spec, $spec->modify($mockQuery));
     }

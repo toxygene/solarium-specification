@@ -6,7 +6,8 @@
         "solarium/solarium": "^3.8"
     },
     "require-dev": {
-        "phpunit/phpunit": "^6.2"
+        "phpunit/phpunit": "^6.2",
+        "mockery/mockery": "^0.9.9"
     },
     "authors": [
         {

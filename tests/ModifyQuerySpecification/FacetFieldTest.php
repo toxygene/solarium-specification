@@ -4,10 +4,13 @@ declare(strict_types=1);
 
 namespace SolariumSpecification\Test\ModifyQuerySpecification;
 
+use Mockery;
+use Mockery\MockInterface;
 use PHPUnit\Framework\TestCase;
-use PHPUnit_Framework_MockObject_MockObject;
+use Solarium\QueryType\Select\Query\Component\Facet\Field;
 use Solarium\QueryType\Select\Query\Component\FacetSet;
 use Solarium\QueryType\Select\Query\Query;
+use SolariumSpecification\ModifyQueryInterface;
 use SolariumSpecification\ModifyQuerySpecification\FacetField;
 
 /**
@@ -16,55 +19,70 @@ use SolariumSpecification\ModifyQuerySpecification\FacetField;
 class FacetFieldTest extends TestCase
 {
     /**
+     * {@inheritdoc}
+     */
+    public function tearDown()
+    {
+        parent::tearDown();
+
+        Mockery::close();
+    }
+
+    /**
      * @covers ::__construct
+     * @covers ::buildFacetField
      * @covers ::modify
      */
     public function testFacetFieldCanBeCreated()
     {
-        /** @var Query|PHPUnit_Framework_MockObject_MockObject $mockQuery */
-        $mockQuery = $this->getMockBuilder(Query::class)
-            ->setMethods(['getFacetSet'])
-            ->getMock();
+        /** @var Query|MockInterface $mockQuery */
+        $mockQuery = Mockery::mock(Query::class, function (MockInterface $mock) {
+            /** @var FacetSet|MockInterface $mockFacetSet */
+            $mockFacetSet = Mockery::mock(FacetSet::class, function (MockInterface $mock) {
+                $mockFacetField = Mockery::mock(FacetField::class, function (MockInterface $mock) {
+                    $mock->shouldReceive('setContains')->once()->with('contains')->andReturnSelf();
+                    $mock->shouldReceive('setContainsIgnoreCase')->once()->with(true)->andReturnSelf();
+                    $mock->shouldReceive('setField')->once()->with('field')->andReturnSelf();
+                    $mock->shouldReceive('setSort')->once()->with(Field::SORT_INDEX)->andReturnSelf();
+                    $mock->shouldReceive('setLimit')->once()->with(10)->andReturnSelf();
+                    $mock->shouldReceive('setOffset')->once()->with(20)->andReturnSelf();
+                    $mock->shouldReceive('setMethod')->once()->with(FIELD::METHOD_ENUM)->andReturnSelf();
+                    $mock->shouldReceive('setMinCount')->once()->with(10)->andReturnSelf();
+                    $mock->shouldReceive('setMissing')->once()->with(true)->andReturnSelf();
+                    $mock->shouldReceive('setPrefix')->once()->with('test')->andReturnSelf();
+                });
 
-        /** @var FacetSet|PHPUnit_Framework_MockObject_MockObject $mockFacetSet */
-        $mockFacetSet = $this->getMockBuilder(FacetSet::class)
-            ->setMethods(['createFacetField', 'setContains', 'setContainsIgnoreCase', 'setField', 'setLimit', 'setMethod', 'setMinCount', 'setMissing', 'setOffset', 'setPrefix', 'setSort'])
-            ->getMock();
+                $mock->shouldReceive('createFacetField')->once()->with('key')->andReturn($mockFacetField);
+            });
 
-        $mockFacetSet->expects($this->once())
-            ->method('createFacetField')
-            ->will($this->returnSelf());
-
-        $mockFacetSet->expects($this->once())
-            ->method('setContains')
-            ->with('contains')
-            ->will($this->returnSelf());
-
-        $mockFacetSet->expects($this->once())
-            ->method('setContainsIgnoreCase')
-            ->with(true)
-            ->will($this->returnSelf());
-
-        $mockFacetSet->expects($this->once())
-            ->method('setField')
-            ->with('field')
-            ->will($this->returnSelf());
-
-        $mockQuery->expects($this->once())
-            ->method('getFacetSet')
-            ->will($this->returnValue($mockFacetSet));
+            $mock->shouldReceive('getFacetSet')->once()->withNoArgs()->andReturn($mockFacetSet);
+        });
 
         $modifyQuery = new FacetField(
             'key',
             'field',
             null,
-            null,
-            null,
-            null,
+            Field::SORT_INDEX,
+            10,
+            20,
             'contains',
-            true
+            true,
+            Field::METHOD_ENUM,
+            true,
+            'test',
+            10
         );
 
-        $modifyQuery->modify($mockQuery);
+        $this->assertSame($modifyQuery, $modifyQuery->modify($mockQuery));
+    }
+
+    /**
+     * @covers ::getModifyQuery
+     */
+    public function testModifyQueryCanBeRetrieved()
+    {
+        $modifyQuery = new FacetField('key');
+
+        $this->assertInstanceOf(ModifyQueryInterface::class, $modifyQuery->getModifyQuery());
     }
 }

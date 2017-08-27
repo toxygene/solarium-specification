@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace SolariumSpecification\QuerySpecification\Group;
 
+use Mockery;
+use Mockery\MockInterface;
 use PHPUnit\Framework\TestCase;
-use PHPUnit_Framework_MockObject_MockObject;
 use SolariumSpecification\QueryInterface;
 use SolariumSpecification\QuerySpecification\Group;
 
@@ -16,7 +17,7 @@ use SolariumSpecification\QuerySpecification\Group;
 class GroupTest extends TestCase
 {
     /**
-     * @var PHPUnit_Framework_MockObject_MockObject|QueryInterface
+     * @var QueryInterface|MockInterface
      */
     private $mockQuery;
 
@@ -32,9 +33,7 @@ class GroupTest extends TestCase
     {
         parent::setUp();
 
-        $this->mockQuery = $this->getMockBuilder(QueryInterface::class)
-            ->setMethods(['getQueryString'])
-            ->getMock();
+        $this->mockQuery = Mockery::mock(QueryInterface::class);
 
         $this->query = new Group($this->mockQuery);
     }
@@ -46,6 +45,8 @@ class GroupTest extends TestCase
     {
         parent::tearDown();
 
+        Mockery::close();
+
         unset($this->mockQuery, $this->query);
     }
 
@@ -54,10 +55,7 @@ class GroupTest extends TestCase
      */
     public function testQueryCanBeGrouped()
     {
-        $this->mockQuery
-            ->expects($this->once())
-            ->method('getQueryString')
-            ->will($this->returnValue('one AND two'));
+        $this->mockQuery->shouldReceive('getQueryString')->once()->withNoArgs()->andReturn('one AND two');
 
         $this->assertEquals('(one AND two)', $this->query->getQueryString());
     }

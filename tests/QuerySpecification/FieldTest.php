@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace SolariumSpecification\Test\QuerySpecification;
 
+use Mockery;
+use Mockery\MockInterface;
 use PHPUnit\Framework\TestCase;
 use SolariumSpecification\QueryInterface;
 use SolariumSpecification\QuerySpecification\Field;
@@ -15,7 +17,7 @@ use SolariumSpecification\QuerySpecification\Field;
 class FieldTest extends TestCase
 {
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|QueryInterface
+     * @var QueryInterface|MockInterface
      */
     private $mockQuery;
 
@@ -31,9 +33,7 @@ class FieldTest extends TestCase
     {
         parent::setUp();
 
-        $this->mockQuery = $this->getMockBuilder(QueryInterface::class)
-            ->setMethods(['getQueryString'])
-            ->getMock();
+        $this->mockQuery = Mockery::mock(QueryInterface::class);
 
         $this->query = new Field(
             'field',
@@ -48,6 +48,8 @@ class FieldTest extends TestCase
     {
         parent::tearDown();
 
+        Mockery::close();
+
         unset($this->mockQuery, $this->query);
     }
 
@@ -56,10 +58,7 @@ class FieldTest extends TestCase
      */
     public function testQueryCanBeFielded()
     {
-        $this->mockQuery
-            ->expects($this->once())
-            ->method('getQueryString')
-            ->will($this->returnValue('query'));
+        $this->mockQuery->shouldReceive('getQueryString')->once()->withNoArgs()->andReturn('query');
 
         $this->assertEquals('field:query', $this->query->getQueryString());
     }

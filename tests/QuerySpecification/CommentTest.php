@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace SolariumSpecification\Test\QuerySpecification;
 
+use Mockery;
+use Mockery\MockInterface;
 use PHPUnit\Framework\TestCase;
-use PHPUnit_Framework_MockObject_MockObject;
 use SolariumSpecification\QueryInterface;
 use SolariumSpecification\QuerySpecification\Comment;
 
@@ -16,7 +17,7 @@ use SolariumSpecification\QuerySpecification\Comment;
 class CommentTest extends TestCase
 {
     /**
-     * @var QueryInterface|PHPUnit_Framework_MockObject_MockObject
+     * @var QueryInterface|MockInterface
      */
     private $mockQuery;
 
@@ -32,9 +33,7 @@ class CommentTest extends TestCase
     {
         parent::setUp();
 
-        $this->mockQuery = $this->getMockBuilder(QueryInterface::class)
-            ->setMethods(['getQueryString'])
-            ->getMock();
+        $this->mockQuery = Mockery::mock(QueryInterface::class);
 
         $this->query = new Comment(
             $this->mockQuery,
@@ -49,6 +48,8 @@ class CommentTest extends TestCase
     {
         parent::tearDown();
 
+        Mockery::close();
+
         unset($this->mockQuery, $this->query);
     }
 
@@ -57,10 +58,7 @@ class CommentTest extends TestCase
      */
     public function testQueryCanBeCommented()
     {
-        $this->mockQuery
-            ->expects($this->once())
-            ->method('getQueryString')
-            ->will($this->returnValue('test'));
+        $this->mockQuery->shouldReceive('getQueryString')->once()->withNoArgs()->andReturn('test');
 
         $this->assertEquals('test /* comment */', $this->query->getQueryString());
     }

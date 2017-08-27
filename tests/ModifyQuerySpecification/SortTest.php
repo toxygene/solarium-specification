@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace SolariumSpecification\Test\ModifyQuerySpecification;
 
+use Mockery;
+use Mockery\MockInterface;
 use PHPUnit\Framework\TestCase;
 use Solarium\QueryType\Select\Query\Query;
+use SolariumSpecification\ModifyQueryInterface;
 use SolariumSpecification\ModifyQuerySpecification\Sort;
 
 /**
@@ -14,20 +17,35 @@ use SolariumSpecification\ModifyQuerySpecification\Sort;
 class SortTest extends TestCase
 {
     /**
+     * {@inheritdoc}
+     */
+    public function tearDown()
+    {
+        parent::tearDown();
+
+        Mockery::close();
+    }
+
+    /**
+     * @covers ::getModifyQuery
+     */
+    public function testModifyQueryCanBeRetrieved()
+    {
+        $setRows = new Sort('test');
+
+        $this->assertInstanceOf(ModifyQueryInterface::class, $setRows->getModifyQuery());
+    }
+
+    /**
      * @covers ::__construct
      * @covers ::modify
      */
     public function testSortCanBeAdded()
     {
-        /** @var \PHPUnit_Framework_MockObject_MockObject|Query $mockQuery */
-        $mockQuery = $this->getMockBuilder(Query::class)
-            ->setMethods(['addSort'])
-            ->getMock();
-
-        $mockQuery->expects($this->once())
-            ->method('addSort')
-            ->with($this->equalTo('test'), $this->equalTo(Query::SORT_ASC))
-            ->will($this->returnSelf());
+        /** @var Query|MockInterface $mockQuery */
+        $mockQuery = Mockery::mock(Query::class, function (MockInterface $mock) {
+            $mock->shouldReceive('addSort')->once()->with('test', Query::SORT_ASC)->andReturnSelf();
+        });
 
         $spec = new Sort('test');
         
@@ -40,19 +58,11 @@ class SortTest extends TestCase
      */
     public function testSortCanBeSet()
     {
-        /** @var \PHPUnit_Framework_MockObject_MockObject|Query $mockQuery */
-        $mockQuery = $this->getMockBuilder(Query::class)
-            ->setMethods(['clearSorts', 'addSort'])
-            ->getMock();
-
-        $mockQuery->expects($this->once())
-            ->method('clearSorts')
-            ->will($this->returnSelf());
-
-        $mockQuery->expects($this->once())
-            ->method('addSort')
-            ->with($this->equalTo('test'), $this->equalTo(Query::SORT_ASC))
-            ->will($this->returnSelf());
+        /** @var Query|MockInterface $mockQuery */
+        $mockQuery = Mockery::mock(Query::class, function (MockInterface $mock) {
+            $mock->shouldReceive('clearSorts')->once()->withNoArgs()->andReturnSelf();
+            $mock->shouldReceive('addSort')->once()->with('test', Query::SORT_ASC)->andReturnSelf();
+        });
 
         $spec = new Sort('test', null, Sort::SET);
 

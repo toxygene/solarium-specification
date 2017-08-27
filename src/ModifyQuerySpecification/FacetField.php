@@ -129,6 +129,7 @@ class FacetField implements ModifyQueryInterface, ModifyQuerySpecificationInterf
      * @param string|null $method
      * @param bool|null $missing
      * @param string|null $prefix
+     * @param int|null $minCount
      */
     public function __construct(
         string $key,
@@ -141,7 +142,8 @@ class FacetField implements ModifyQueryInterface, ModifyQuerySpecificationInterf
         bool $containsIgnoreCase = null,
         string $method = null,
         bool $missing = null,
-        string $prefix = null
+        string $prefix = null,
+        int $minCount = null
     )
     {
         if (null === $mode) {
@@ -159,6 +161,7 @@ class FacetField implements ModifyQueryInterface, ModifyQuerySpecificationInterf
         $this->method = $method;
         $this->missing = $missing;
         $this->prefix = $prefix;
+        $this->minCount = $minCount;
     }
 
     /**
