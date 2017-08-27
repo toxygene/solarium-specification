@@ -65,7 +65,7 @@ class FunctionsTest extends TestCase
      */
     public function testTermsCanBeJoinedWithTheDefaultOperator()
     {
-        $this->assertEquals('(x y)', defaultX(['x', 'y']));
+        $this->assertEquals('x y', defaultX(['x', 'y']));
     }
 
     /**
@@ -207,7 +207,7 @@ class FunctionsTest extends TestCase
      */
     public function testTermsCanBeOredTogether()
     {
-        $this->assertEquals('(x OR y)', orX(['x', 'y']));
+        $this->assertEquals('x OR y', orX(['x', 'y']));
     }
 
     /**

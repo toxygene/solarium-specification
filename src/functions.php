@@ -70,7 +70,7 @@ function comment(string $term, string $comment): string
  */
 function defaultX(array $parts): string
 {
-    return group(implode(' ', $parts));
+    return implode(' ', $parts);
 }
 
 /**
@@ -324,7 +324,7 @@ function not(string $x, string $y): string
  */
 function orX(array $parts): string
 {
-    return group(implode(' OR ', $parts));
+    return implode(' OR ', $parts);
 }
 
 /**
