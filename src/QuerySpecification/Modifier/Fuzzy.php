@@ -1,6 +1,6 @@
 <?php
 
-namespace SolariumSpecification\QuerySpecification\Modifiers;
+namespace SolariumSpecification\QuerySpecification\Modifier;
 
 use SolariumSpecification\QueryInterface;
 use SolariumSpecification\QuerySpecification\Term\SingleTerm;

@@ -66,4 +66,20 @@ class FacetQueryTest extends TestCase
 
         $this->assertSame($facetQuery, $facetQuery->modify($mockQuery));
     }
+
+    /**
+     * @covers ::getModifyQuery
+     */
+    public function testModifyQueryCanBeRetrieved()
+    {
+        /** @var QuerySpecificationInterface|MockInterface $mockQuerySpecification */
+        $mockQuerySpecification = Mockery::mock(QuerySpecificationInterface::class);
+
+        $facetQuery = new FacetQuery(
+            'key',
+            $mockQuerySpecification
+        );
+
+        $this->assertSame($facetQuery, $facetQuery->getModifyQuery());
+    }
 }

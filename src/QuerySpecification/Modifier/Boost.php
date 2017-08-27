@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SolariumSpecification\QuerySpecification\Modifiers;
+namespace SolariumSpecification\QuerySpecification\Modifier;
 
 use SolariumSpecification\QueryInterface;
 use SolariumSpecification\QuerySpecificationInterface;

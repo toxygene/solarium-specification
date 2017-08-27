@@ -16,7 +16,7 @@ use RuntimeException;
  */
 function andX(array $terms): string
 {
-    return group(implode(' AND ', $terms));
+    return implode(' AND ', $terms);
 }
 
 /**

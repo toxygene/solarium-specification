@@ -41,7 +41,7 @@ class FunctionsTest extends TestCase
      */
     public function testTermsCanBeAndedTogether()
     {
-        $this->assertEquals('(x AND y)', andX(['x', 'y']));
+        $this->assertEquals('x AND y', andX(['x', 'y']));
     }
 
     /**

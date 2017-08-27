@@ -11,14 +11,14 @@ use function SolariumSpecification\andX;
 class AndX implements QueryInterface, QuerySpecificationInterface
 {
     /**
-     * @var \SolariumSpecification\QuerySpecificationInterface[]
+     * @var QuerySpecificationInterface[]
      */
     private $queries;
 
     /**
      * Constructor
      *
-     * @param \SolariumSpecification\QuerySpecificationInterface[] $queries
+     * @param QuerySpecificationInterface[] $queries
      */
     public function __construct($queries = [])
     {
@@ -28,7 +28,7 @@ class AndX implements QueryInterface, QuerySpecificationInterface
     /**
      * Append a query
      *
-     * @param \SolariumSpecification\QuerySpecificationInterface $query
+     * @param QuerySpecificationInterface $query
      * @return self
      */
     public function append(QuerySpecificationInterface $query)
