@@ -7,8 +7,6 @@ namespace SolariumSpecification;
 use Solarium\Core\Client\ClientInterface;
 use Solarium\QueryType\Select\Query\Query;
 use Solarium\QueryType\Select\Result\Result;
-use SolariumSpecification\ModifyQuery\ModifyQueryInterface;
-use SolariumSpecification\Query\QueryInterface;
 
 /**
  * Solarium specification repository
@@ -34,7 +32,7 @@ class Repository implements RepositoryInterface
      * {@inheritdoc}
      */
     public function match(
-        QueryInterface $query = null,
+        QuerySpecificationInterface $query = null,
         ModifyQueryInterface $modifyQuery = null
     ): Result
     {
@@ -45,12 +43,12 @@ class Repository implements RepositoryInterface
     /**
      * Create a select query from a specification
      *
-     * @param QueryInterface|null $query
+     * @param QuerySpecificationInterface|null $query
      * @param ModifyQueryInterface|null $modifyQuery
      * @return Query
      */
     private function createQuery(
-        QueryInterface $query = null,
+        QuerySpecificationInterface $query = null,
         ModifyQueryInterface $modifyQuery = null
     ): Query
     {
@@ -58,7 +56,7 @@ class Repository implements RepositoryInterface
             ->createSelect();
 
         if (null !== $query) {
-            $q->setQuery($query->getQueryString());
+            $q->setQuery($query->getQuery()->getQueryString());
         }
 
         if (null !== $modifyQuery) {

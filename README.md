@@ -7,21 +7,22 @@ Create Solarium queries for the [standard query parser](https://lucene.apache.or
 use Solarium\Core\Client\Client;
 use Solarium\QueryType\Select\Query\Query;
 use Solarium\QueryType\Select\Result\Result;
-use SolariumSpecification\ModifyQuery\ModifyQueryInterface;
+use SolariumSpecification\ModifyQueryInterface;
 use SolariumSpecification\ModifyQuery\SetHandler;
 use SolariumSpecification\ModifyQuery\SetResultClass;
-use SolariumSpecification\Query\DateTime;
-use SolariumSpecification\Query\Field;
-use SolariumSpecification\Query\Operator\AndX;
-use SolariumSpecification\Query\Operator\OrX;
-use SolariumSpecification\Query\QueryInterface;
-use SolariumSpecification\Query\Range;
-use SolariumSpecification\Query\Term\Phrase;
-use SolariumSpecification\Query\Term\SingleTerm;
+use SolariumSpecification\QueryInterface;
+use SolariumSpecification\QuerySpecification\DateTime;
+use SolariumSpecification\QuerySpecification\Field;
+use SolariumSpecification\QuerySpecification\Operator\AndX;
+use SolariumSpecification\QuerySpecification\Operator\OrX;
+use SolariumSpecification\QuerySpecificationInterface;
+use SolariumSpecification\QuerySpecification\Range;
+use SolariumSpecification\QuerySpecification\Term\Phrase;
+use SolariumSpecification\QuerySpecification\Term\SingleTerm;
 use SolariumSpecification\Repository;
 
-// Only match results with a `last_updated_at` after a supplied DateTimeImmutable
-class UpdatedAfter implements QueryInterface
+// Only match results with a `last_updated_at` after a supplied DateTime
+class UpdatedAfter implements QuerySpecificationInterface
 {
     private $updatedAfter;
 
@@ -30,17 +31,17 @@ class UpdatedAfter implements QueryInterface
         $this->updatedAfter = $updatedAfter;
     }
 
-    public function getQueryString(): string
+    public function getQuery(): QueryInterface
     {
-        return (new Field(
+        return new Field(
             'last_updated_at',
             new Range((new DateTime($this->updatedAfter))->getQueryString())
-        ))->getQueryString();
+        );
     }
 }
 
 // Only match results assign to a supplied `category`
-class FilterByCategory implements QueryInterface
+class FilterByCategory implements QuerySpecificationInterface
 {
     private $category;
 
@@ -49,24 +50,24 @@ class FilterByCategory implements QueryInterface
         $this->category = $category;
     }
 
-    public function getQueryString(): string
+    public function getQuery(): QueryInterface
     {
-        return (new Field(
+        return new Field(
             'category',
             $this->category
-        ))->getQueryString();
+        );
     }
 }
 
 // Combine `UpdatedAfter` for the last week and `FilterByCategory` for 'Consumer Electronics'
-class RecentlyUpdatedElectronics implements QueryInterface
+class RecentlyUpdatedElectronics implements QuerySpecificationInterface
 {
-    public function getQueryString(): string
+    public function getQuery(): QueryInterface
     {
-        return (new AndX([
+        return new AndX([
             new UpdatedAfter(new DateTimeImmutable('-1 week')),
             new FilterByCategory(new OrX([new Phrase('Consumer Electronics'), new SingleTerm('Electronics')]))
-        ]))->getQueryString();
+        ]);
     }
 }
 
@@ -109,20 +110,12 @@ class Products implements ModifyQueryInterface
     }
 }
 
+var_dump((new RecentlyUpdatedElectronics())->getQuery()->getQueryString()); // '(last_updated_at:[2016-07-06T19:36:23Z] AND category:("Consumer Electronics" OR "Electronics"))'
+
 $solariumClient = new Client();
+$query = $solariumClient->createSelect();
 
-$repository = new Repository($solariumClient);
-var_dump((string) (new RecentlyUpdatedElectronics())->getTerm());
-var_dump(
-    $repository->match(
-        new RecentlyUpdatedElectronics(),
-        new Products()
-    )
-);
+(new Products())->modify($query);
 
-/*
-The query will be 'last_updated_at:[2016-07-06T19:36:23Z TO *] AND category:("Consumer Electronics" OR "Electronics")'.
-The handler is Products.
-The result class is ProductResult.
-*/
-```
+var_dump($query->getResultClass()); // 'ProductsResult'
+var_dump($query->getHandler()); // 'Products'
