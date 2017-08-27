@@ -33,7 +33,7 @@ class Repository implements RepositoryInterface
      */
     public function match(
         QuerySpecificationInterface $query = null,
-        ModifyQueryInterface $modifyQuery = null
+        ModifyQuerySpecificationInterface $modifyQuery = null
     ): Result
     {
         return $this->client
@@ -44,12 +44,12 @@ class Repository implements RepositoryInterface
      * Create a select query from a specification
      *
      * @param QuerySpecificationInterface|null $query
-     * @param ModifyQueryInterface|null $modifyQuery
+     * @param ModifyQuerySpecificationInterface|null $modifyQuery
      * @return Query
      */
     private function createQuery(
         QuerySpecificationInterface $query = null,
-        ModifyQueryInterface $modifyQuery = null
+        ModifyQuerySpecificationInterface $modifyQuery = null
     ): Query
     {
         $q = $this->client
@@ -60,7 +60,7 @@ class Repository implements RepositoryInterface
         }
 
         if (null !== $modifyQuery) {
-            $modifyQuery->modify($q);
+            $modifyQuery->getModifyQuery()->modify($q);
         }
 
         return $q;

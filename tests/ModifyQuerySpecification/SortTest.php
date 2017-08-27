@@ -7,6 +7,7 @@ namespace SolariumSpecification\Test\ModifyQuerySpecification;
 use Mockery;
 use Mockery\MockInterface;
 use PHPUnit\Framework\TestCase;
+use RuntimeException;
 use Solarium\QueryType\Select\Query\Query;
 use SolariumSpecification\ModifyQueryInterface;
 use SolariumSpecification\ModifyQuerySpecification\Sort;
@@ -67,5 +68,23 @@ class SortTest extends TestCase
         $spec = new Sort('test', null, Sort::SET);
 
         $this->assertSame($spec, $spec->modify($mockQuery));
+    }
+
+    /**
+     * @covers ::modify
+     * @expectedException RuntimeException
+     */
+    public function testInvalidModeThrowsAnException()
+    {
+        $spec = new Sort(
+            'text',
+            null,
+            'invalid'
+        );
+
+        /** @var Query|MockInterface $mockQuery */
+        $mockQuery = Mockery::mock(Query::class);
+
+        $spec->modify($mockQuery);
     }
 }

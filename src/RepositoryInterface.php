@@ -15,12 +15,12 @@ interface RepositoryInterface
      * Match all results
      *
      * @param QuerySpecificationInterface|null $query
-     * @param ModifyQueryInterface|null $modifyQuery
+     * @param ModifyQuerySpecificationInterface|null $modifyQuery
      *
      * @return Result
      */
     public function match(
         QuerySpecificationInterface $query = null,
-        ModifyQueryInterface $modifyQuery = null
+        ModifyQuerySpecificationInterface $modifyQuery = null
     ): Result;
 }
