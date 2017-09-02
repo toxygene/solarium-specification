@@ -8,6 +8,7 @@
         "email": "justin.hendrickson@gmail.com"
     }],
     "require": {
+        "php": "^7",
         "solarium/solarium": "^3.8"
     },
     "require-dev": {
