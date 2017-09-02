@@ -2,6 +2,11 @@
     "name": "toxygene/solarium-specification",
     "description": "Specification pattern library for Solarium select queries",
     "type": "library",
+    "license": "MIT",
+    "authors": [{
+        "name": "Justin Hendrickson",
+        "email": "justin.hendrickson@gmail.com"
+    }],
     "require": {
         "solarium/solarium": "^3.8"
     },
